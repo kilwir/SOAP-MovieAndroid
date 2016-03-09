@@ -5,4 +5,5 @@ package tmtc.soap.Presenter;
  * Created by remyjallan on 06/03/2016.
  */
 public interface MainPresenter {
+    void loadLastMovies();
 }

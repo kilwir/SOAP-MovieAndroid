@@ -36,7 +36,7 @@ public class LoginActivity extends BaseAppCompatActivity implements LoginView {
         ButterKnife.bind(this);
         mPresenter = new LoginPresenterImpl(this);
         setupWindowAnimations();
-        //mPresenter.checkIsConnected();
+        mPresenter.checkIsConnected();
     }
 
     @Override

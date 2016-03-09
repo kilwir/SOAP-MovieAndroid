@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="accent_material_dark_1">#ffcf40</color>
+    <color name="movie_placeholder">#ff4e5d64</color>
 </resources>
