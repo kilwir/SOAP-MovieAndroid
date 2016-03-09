@@ -47,10 +47,10 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(String message) {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Creating Account...");
+        mProgressDialog.setMessage(message);
         mProgressDialog.show();
     }
 
@@ -72,5 +72,12 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
     public void navigateToLogin() {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void navigateToMain() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

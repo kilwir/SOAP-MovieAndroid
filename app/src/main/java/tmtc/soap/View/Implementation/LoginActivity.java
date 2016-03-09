@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mPresenter = new LoginPresenterImpl(this);
+        mPresenter.checkIsConnected();
     }
 
     @Override
@@ -41,10 +42,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(String message) {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Connection...");
+        mProgressDialog.setMessage(message);
         mProgressDialog.show();
     }
 
@@ -66,5 +67,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void navigateToSignup() {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
+    }
+
+    public void navigateToMain() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

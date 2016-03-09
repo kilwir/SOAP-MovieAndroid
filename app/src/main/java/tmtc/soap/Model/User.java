@@ -37,4 +37,9 @@ public class User {
     public void setEmail(String email) {
         mEmail = email;
     }
+
+    @Override
+    public String toString() {
+        return "User("+mUsername+","+mPassword+","+mEmail+")";
+    }
 }

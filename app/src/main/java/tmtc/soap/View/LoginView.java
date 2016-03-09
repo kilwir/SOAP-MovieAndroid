@@ -6,4 +6,5 @@ package tmtc.soap.View;
  */
 public interface LoginView extends View{
     void navigateToSignup();
+    void navigateToMain();
 }

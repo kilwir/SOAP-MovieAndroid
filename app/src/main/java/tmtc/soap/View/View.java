@@ -6,6 +6,6 @@ package tmtc.soap.View;
  */
 public interface View {
     void showMessage(String message);
-    void showProgress();
+    void showProgress(String message);
     void hideProgress();
 }

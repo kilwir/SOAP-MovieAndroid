@@ -6,4 +6,5 @@ package tmtc.soap.Presenter;
  */
 public interface LoginPresenter {
     void login(String email, String password);
+    void checkIsConnected();
 }

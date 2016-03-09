@@ -1,5 +1,7 @@
 package tmtc.soap.Presenter.Implementation;
 
+import android.app.Activity;
+
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.LoginListener;
 import tmtc.soap.Model.ErrorContainer;
@@ -17,11 +19,12 @@ public class LoginPresenterImpl implements LoginPresenter,LoginListener{
 
     public LoginPresenterImpl(LoginView view) {
         this.mView = view;
+        UserDataManager.getInstance().init((Activity)mView);
     }
 
     @Override
     public void login(String username, String password) {
-        mView.showProgress();
+        mView.showProgress("Connection...");
         if(username.isEmpty()) {
             mView.hideProgress();
             mView.showMessage("Username as empty");
@@ -37,14 +40,21 @@ public class LoginPresenterImpl implements LoginPresenter,LoginListener{
     }
 
     @Override
+    public void checkIsConnected() {
+        if(UserDataManager.getInstance().isConnected()) {
+            mView.navigateToMain();
+        }
+    }
+
+    @Override
     public void onLoginSuccess(User user) {
         mView.hideProgress();
-        mView.showMessage("Connection successful");
+        mView.navigateToMain();
     }
 
     @Override
     public void onLoginError(ErrorContainer error) {
         mView.hideProgress();
-        mView.showMessage("Error connection");
+        mView.showMessage(error.toString());
     }
 }
