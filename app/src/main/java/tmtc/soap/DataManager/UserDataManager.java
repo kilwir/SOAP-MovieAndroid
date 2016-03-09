@@ -31,9 +31,7 @@ public class UserDataManager {
         return ourInstance;
     }
 
-    private UserDataManager() {
-        Logger.init("UserDataManager");
-    }
+    private UserDataManager() {}
 
     public void init(Context context) {
         this.mContext = context;
@@ -67,8 +65,24 @@ public class UserDataManager {
         listener.onSignupSuccess(user);
     }
 
+    public void logout() {
+        this.deleteUserOnLocal();
+    }
+
     public User getCurrentUser() {
         return mCurrentUser;
+    }
+
+    private void deleteUserOnLocal() {
+        if(mContext == null){
+            return;
+        }
+        SharedPreferences preferences = mContext.getSharedPreferences(PREFS_NAME_USER,0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username",null);
+        editor.putString("password",null);
+        editor.putString("email",null);
+        editor.apply();
     }
 
     private void saveUserOnLocal(User user) {

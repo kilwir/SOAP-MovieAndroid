@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import tmtc.soap.Presenter.Implementation.SignupPresenterImpl;
 import tmtc.soap.Presenter.SignupPresenter;
 import tmtc.soap.R;
-import tmtc.soap.View.BaseAppCompatActivity;
+import tmtc.soap.View.Template.BaseAppCompatActivity;
 import tmtc.soap.View.SignupView;
 
 /**

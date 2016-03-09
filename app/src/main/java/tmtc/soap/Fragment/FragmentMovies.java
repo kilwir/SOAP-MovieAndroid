@@ -50,6 +50,7 @@ public class FragmentMovies extends Fragment {
     }
 
     public void loadMovies(List<Movie> movies) {
+        Logger.d("Enter load Movies");
         MoviesAdapter adapter = new MoviesAdapter(getActivity(),movies);
         RecyclerMovies.setAdapter(adapter);
     }

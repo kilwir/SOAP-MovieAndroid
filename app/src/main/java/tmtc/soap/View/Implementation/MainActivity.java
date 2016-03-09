@@ -1,52 +1,40 @@
 package tmtc.soap.View.Implementation;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Fragment.FragmentMovies;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Presenter.Implementation.MainPresenterImpl;
 import tmtc.soap.Presenter.MainPresenter;
 import tmtc.soap.R;
+import tmtc.soap.View.Template.DrawerAppCompatActivity;
 import tmtc.soap.View.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
     private MainPresenter mPresenter;
-
-    @Bind(R.id.activity_movies_toolbar)
-    public Toolbar mToolbar;
 
     private ProgressDialog mProgressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        this.init();
+
         mPresenter = new MainPresenterImpl(this);
-        initializeToolbar();
+
         mPresenter.loadLastMovies();
-    }
-
-    private void initializeToolbar() {
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("");
-
-        getSupportActionBar().setHomeAsUpIndicator(
-                R.mipmap.ic_launcher);
     }
 
     @Override
@@ -80,6 +68,22 @@ public class MainActivity extends AppCompatActivity implements MainView{
         FragmentMovies fragmentMovies = (FragmentMovies) getFragmentManager().findFragmentById(R.id.fragment_movies);
         if(fragmentMovies != null) {
             fragmentMovies.loadMovies(movies);
+        }
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void actionNavigationItemSelected(int id) {
+        switch (id) {
+            case R.id.logout:
+                mPresenter.logout();
+                break;
         }
     }
 }

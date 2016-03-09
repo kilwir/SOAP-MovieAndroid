@@ -10,4 +10,5 @@ import tmtc.soap.Model.Movie;
  */
 public interface MainView extends View {
     void showLastMovies(List<Movie> movies);
+    void navigateToLogin();
 }

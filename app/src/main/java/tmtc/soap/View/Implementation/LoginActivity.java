@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import tmtc.soap.Presenter.Implementation.LoginPresenterImpl;
 import tmtc.soap.Presenter.LoginPresenter;
 import tmtc.soap.R;
-import tmtc.soap.View.BaseAppCompatActivity;
+import tmtc.soap.View.Template.BaseAppCompatActivity;
 import tmtc.soap.View.LoginView;
 
 public class LoginActivity extends BaseAppCompatActivity implements LoginView {

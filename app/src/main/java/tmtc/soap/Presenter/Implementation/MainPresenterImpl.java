@@ -3,6 +3,7 @@ package tmtc.soap.Presenter.Implementation;
 import java.util.List;
 
 import tmtc.soap.DataManager.MovieDataManager;
+import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MoviesListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
@@ -25,6 +26,12 @@ public class MainPresenterImpl implements MainPresenter, MoviesListener {
     public void loadLastMovies() {
         mView.showProgress("Loading...");
         MovieDataManager.getInstance().getLastMovies(this);
+    }
+
+    @Override
+    public void logout() {
+        UserDataManager.getInstance().logout();
+        mView.navigateToLogin();
     }
 
     @Override

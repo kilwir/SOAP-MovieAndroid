@@ -6,4 +6,5 @@ package tmtc.soap.Presenter;
  */
 public interface MainPresenter {
     void loadLastMovies();
+    void logout();
 }

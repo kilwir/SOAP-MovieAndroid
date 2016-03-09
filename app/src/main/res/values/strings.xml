@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">SOAP</string>
     <string name="application_name">TMTC</string>
+    <string name="open_nagivation_drawer">Open navigation drawer</string>
+    <string name="close_navigation_drawer">Close navigation drawer</string>
 </resources>
