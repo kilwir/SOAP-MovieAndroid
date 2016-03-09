@@ -2,8 +2,9 @@ package tmtc.soap.View.Implementation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,9 +14,10 @@ import butterknife.OnClick;
 import tmtc.soap.Presenter.Implementation.LoginPresenterImpl;
 import tmtc.soap.Presenter.LoginPresenter;
 import tmtc.soap.R;
+import tmtc.soap.View.BaseAppCompatActivity;
 import tmtc.soap.View.LoginView;
 
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends BaseAppCompatActivity implements LoginView {
 
     private LoginPresenter mPresenter;
 
@@ -33,7 +35,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mPresenter = new LoginPresenterImpl(this);
-        mPresenter.checkIsConnected();
+        setupWindowAnimations();
+        //mPresenter.checkIsConnected();
+    }
+
+    @Override
+    public void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
     }
 
     @Override
@@ -66,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @OnClick(R.id.link_signup)
     public void navigateToSignup() {
         Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
+        transitionTo(intent);
     }
 
     public void navigateToMain() {

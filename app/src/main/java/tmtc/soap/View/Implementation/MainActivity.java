@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mPresenter = new MainPresenterImpl(this);
-        Logger.init();
-        Logger.d(UserDataManager.getInstance().getCurrentUser().toString());
     }
 
     @Override
@@ -40,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     public void hideProgress() {
+
+    }
+
+    @Override
+    public void setupWindowAnimations() {
 
     }
 }

@@ -8,4 +8,5 @@ public interface View {
     void showMessage(String message);
     void showProgress(String message);
     void hideProgress();
+    void setupWindowAnimations();
 }

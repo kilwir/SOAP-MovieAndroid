@@ -3,24 +3,25 @@ package tmtc.soap.View.Implementation;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import tmtc.soap.Presenter.Implementation.LoginPresenterImpl;
 import tmtc.soap.Presenter.Implementation.SignupPresenterImpl;
 import tmtc.soap.Presenter.SignupPresenter;
 import tmtc.soap.R;
+import tmtc.soap.View.BaseAppCompatActivity;
 import tmtc.soap.View.SignupView;
 
 /**
  * Bad Boys Team
  * Created by remyjallan on 04/03/2016.
  */
-public class SignupActivity extends AppCompatActivity implements SignupView {
+public class SignupActivity extends BaseAppCompatActivity implements SignupView {
 
     private SignupPresenter mPresenter;
 
@@ -39,6 +40,7 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
         mPresenter = new SignupPresenterImpl(this);
+        this.setupWindowAnimations();
     }
 
     @Override
@@ -62,16 +64,22 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
         }
     }
 
+    @Override
+    public void setupWindowAnimations() {
+        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        getWindow().setEnterTransition(fade);
+    }
+
     @OnClick(R.id.btn_signup)
     public void OnClickSignup() {
-        mPresenter.signup(InputEmail.getText().toString(),InputUsername.getText().toString(),InputPassword.getText().toString());
+        mPresenter.signup(InputEmail.getText().toString(), InputUsername.getText().toString(), InputPassword.getText().toString());
     }
 
     @Override
     @OnClick(R.id.link_login)
     public void navigateToLogin() {
         Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
+        transitionTo(intent);
     }
 
     @Override
