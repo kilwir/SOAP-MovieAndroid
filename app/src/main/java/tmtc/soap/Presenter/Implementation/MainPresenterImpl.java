@@ -35,11 +35,6 @@ public class MainPresenterImpl implements MainPresenter, MoviesListener {
     }
 
     @Override
-    public void onMovieClick(Movie movie) {
-
-    }
-
-    @Override
     public void OnMoviesSuccess(List<Movie> movies) {
         mView.hideProgress();
         mView.showLastMovies(movies);

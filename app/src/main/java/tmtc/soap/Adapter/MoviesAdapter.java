@@ -89,7 +89,7 @@ class MoviesAdapterViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View view) {
         if(mListener != null) {
-            mListener.ItemMovieListenerOnClick(getAdapterPosition());
+            mListener.ItemMovieListenerOnClick(view,getAdapterPosition());
         }
     }
 }

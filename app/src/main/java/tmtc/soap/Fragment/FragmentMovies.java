@@ -68,12 +68,11 @@ public class FragmentMovies extends Fragment implements ItemMovieListener.IPosit
     }
 
     @Override
-    public void ItemMovieListenerOnClick(int position) {
+    public void ItemMovieListenerOnClick(View view,int position) {
         if(mMovies != null) {
-            Logger.d(mMovies.get(position).getName());
             if(mListenerMovie != null) {
                 Movie movie = mMovies.get(position);
-                mListenerMovie.ItemMovieListenerOnClick(movie);
+                mListenerMovie.ItemMovieListenerOnClick(view,movie);
             }
         }
     }

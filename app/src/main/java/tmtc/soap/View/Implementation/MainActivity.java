@@ -1,16 +1,15 @@
 package tmtc.soap.View.Implementation;
 
-import android.app.ProgressDialog;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
 
-import com.orhanobut.logger.Logger;
+import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
 import tmtc.soap.Fragment.FragmentMovies;
 import tmtc.soap.Listener.ItemMovieListener;
 import tmtc.soap.Model.Movie;
@@ -24,8 +23,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
 
     private MainPresenter mPresenter;
 
-    private ProgressDialog mProgressDialog;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,27 +33,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
         mPresenter = new MainPresenterImpl(this);
 
         mPresenter.loadLastMovies();
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showProgress(String message) {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(message);
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideProgress() {
-        if(mProgressDialog != null) {
-            mProgressDialog.hide();
-            mProgressDialog = null;
-        }
     }
 
     @Override
@@ -81,6 +57,14 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
+    public void navigateToMovie(View movieView,Movie movie) {
+        Intent intent = new Intent(this,MovieActivity.class);
+        intent.putExtra("movie", Parcels.wrap(movie));
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,movieView,"poster_movie");
+        startActivity(intent,activityOptions.toBundle());
+    }
+
+    @Override
     protected void actionNavigationItemSelected(int id) {
         switch (id) {
             case R.id.logout:
@@ -90,7 +74,7 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
-    public void ItemMovieListenerOnClick(Movie movie) {
-        mPresenter.onMovieClick(movie);
+    public void ItemMovieListenerOnClick(View view,Movie movie) {
+        this.navigateToMovie(view,movie);
     }
 }

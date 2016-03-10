@@ -1,5 +1,4 @@
 package tmtc.soap.Model;
-
 import org.parceler.Parcel;
 
 import java.net.URI;
@@ -12,14 +11,13 @@ import java.net.URI;
 public class Movie {
     private String mName;
     private String mReleaseDate;
-    private String mType;
     private String mPoster;
+    private String mSynopsis;
 
     public Movie() {} //Parcel required
 
-    public Movie(String name, String type) {
+    public Movie(String name) {
         this.mName = name;
-        this.mType = type;
     }
 
     public String getName() {
@@ -38,14 +36,6 @@ public class Movie {
         mReleaseDate = releaseDate;
     }
 
-    public String getType() {
-        return mType;
-    }
-
-    public void setType(String type) {
-        mType = type;
-    }
-
     public String getPoster() {
         return mPoster;
     }
@@ -54,12 +44,19 @@ public class Movie {
         mPoster = poster;
     }
 
+    public String getSynopsis() {
+        return mSynopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        mSynopsis = synopsis;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
                 "mName='" + mName + '\'' +
                 ", mReleaseDate='" + mReleaseDate + '\'' +
-                ", mType='" + mType + '\'' +
                 ", mPoster='" + mPoster + '\'' +
                 '}';
     }

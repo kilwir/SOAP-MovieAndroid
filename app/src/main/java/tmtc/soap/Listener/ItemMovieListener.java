@@ -1,5 +1,7 @@
 package tmtc.soap.Listener;
 
+import android.view.View;
+
 import tmtc.soap.Model.Movie;
 
 /**
@@ -8,9 +10,9 @@ import tmtc.soap.Model.Movie;
  */
 public abstract class ItemMovieListener {
     public interface IPosition {
-        void ItemMovieListenerOnClick(int position);
+        void ItemMovieListenerOnClick(View view,int position);
     }
     public interface IMovie {
-        void ItemMovieListenerOnClick(Movie movie);
+        void ItemMovieListenerOnClick(View view,Movie movie);
     }
 }

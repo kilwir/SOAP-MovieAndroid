@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,27 +42,6 @@ public class LoginActivity extends BaseAppCompatActivity implements LoginView {
     public void setupWindowAnimations() {
         Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
         getWindow().setExitTransition(slide);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showProgress(String message) {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(message);
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideProgress() {
-        if(mProgressDialog != null) {
-            mProgressDialog.hide();
-            mProgressDialog = null;
-        }
     }
 
     @OnClick(R.id.btn_login)

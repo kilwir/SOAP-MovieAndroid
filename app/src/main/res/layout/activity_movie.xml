@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" android:id="@+id/include_toolbar"></include>
+
+    <tmtc.soap.CustomView.TopCropImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:transitionName="poster_name"
+        android:id="@+id/image_poster"
+        android:layout_below="@id/include_toolbar"/>
+
+    <TextView
+        android:id="@+id/text_name_movie"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:paddingLeft="48dp"
+        android:paddingRight="48dp"
+        android:transformPivotY="0dp"
+        android:layout_below="@id/image_poster"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="28sp"
+        android:textColor="#FFF"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        tools:text="An awesome title"
+        />
+
+    <ImageButton
+        android:id="@+id/activity_detail_fab"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="-27dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_favorite_outline_24dp"
+        android:background="@drawable/fab"
+        android:layout_below="@id/image_poster"
+        android:elevation="4dp"
+        android:stateListAnimator="@anim/fab"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_name_movie"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/activity_detail_book_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/header_synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SoapHeaderTextView"
+                android:text="Synopsis"/>
+            <TextView
+                android:id="@+id/text_synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SoapDetailField"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+

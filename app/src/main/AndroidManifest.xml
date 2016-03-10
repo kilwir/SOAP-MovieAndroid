@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".View.Implementation.MainActivity">
         </activity>
+        <activity android:name=".View.Implementation.MovieActivity">
+        </activity>
     </application>
 
 </manifest>

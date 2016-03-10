@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.TransitionInflater;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,27 +40,6 @@ public class SignupActivity extends BaseAppCompatActivity implements SignupView 
         ButterKnife.bind(this);
         mPresenter = new SignupPresenterImpl(this);
         this.setupWindowAnimations();
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showProgress(String message) {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(message);
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void hideProgress() {
-        if(mProgressDialog != null) {
-            mProgressDialog.hide();
-            mProgressDialog = null;
-        }
     }
 
     @Override

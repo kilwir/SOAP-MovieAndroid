@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/movie_placeholder"
         android:scaleType="centerCrop"
+        android:transitionName="poster_movie"
         />
 
     <TextView
