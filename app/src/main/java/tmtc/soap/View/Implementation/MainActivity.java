@@ -12,6 +12,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import tmtc.soap.Fragment.FragmentMovies;
+import tmtc.soap.Listener.ItemMovieListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Presenter.Implementation.MainPresenterImpl;
 import tmtc.soap.Presenter.MainPresenter;
@@ -19,7 +20,7 @@ import tmtc.soap.R;
 import tmtc.soap.View.Template.DrawerAppCompatActivity;
 import tmtc.soap.View.MainView;
 
-public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener, ItemMovieListener.IMovie {
 
     private MainPresenter mPresenter;
 
@@ -67,6 +68,7 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     public void showLastMovies(List<Movie> movies) {
         FragmentMovies fragmentMovies = (FragmentMovies) getFragmentManager().findFragmentById(R.id.fragment_movies);
         if(fragmentMovies != null) {
+            fragmentMovies.setListenerMovie(this);
             fragmentMovies.loadMovies(movies);
         }
     }
@@ -85,5 +87,10 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
                 mPresenter.logout();
                 break;
         }
+    }
+
+    @Override
+    public void ItemMovieListenerOnClick(Movie movie) {
+        mPresenter.onMovieClick(movie);
     }
 }

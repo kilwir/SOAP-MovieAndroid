@@ -28,7 +28,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapterViewHolder>
 
     private Context mContext;
     private List<Movie> mMovies;
-    private ItemMovieListener.Position mListener;
+    private ItemMovieListener.IPosition mListener;
 
     public MoviesAdapter(Context context,List<Movie> movies) {
         this.mContext = context;
@@ -36,7 +36,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapterViewHolder>
         Logger.init("MoviesAdapter");
     }
 
-    public void setItemMovieListener(ItemMovieListener.Position listener) {
+    public void setItemMovieListener(ItemMovieListener.IPosition listener) {
         this.mListener = listener;
     }
 
@@ -74,7 +74,7 @@ class MoviesAdapterViewHolder extends RecyclerView.ViewHolder implements View.On
     @Bind(R.id.item_movie_title)
     protected TextView  mTitle;
 
-    protected ItemMovieListener.Position mListener;
+    protected ItemMovieListener.IPosition mListener;
 
     public MoviesAdapterViewHolder(View itemView) {
         super(itemView);
@@ -82,7 +82,7 @@ class MoviesAdapterViewHolder extends RecyclerView.ViewHolder implements View.On
         itemView.setOnClickListener(this);
     }
 
-    public void setItemMovieListener(ItemMovieListener.Position listener) {
+    public void setItemMovieListener(ItemMovieListener.IPosition listener) {
         this.mListener = listener;
     }
 

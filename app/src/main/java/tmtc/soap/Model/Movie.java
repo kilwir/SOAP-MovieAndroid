@@ -1,16 +1,21 @@
 package tmtc.soap.Model;
 
+import org.parceler.Parcel;
+
 import java.net.URI;
 
 /**
  * Bad Boys Team
  * Created by remyjallan on 09/03/2016.
  */
+@Parcel
 public class Movie {
     private String mName;
     private String mReleaseDate;
     private String mType;
     private String mPoster;
+
+    public Movie() {} //Parcel required
 
     public Movie(String name, String type) {
         this.mName = name;
@@ -47,5 +52,15 @@ public class Movie {
 
     public void setPoster(String poster) {
         mPoster = poster;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "mName='" + mName + '\'' +
+                ", mReleaseDate='" + mReleaseDate + '\'' +
+                ", mType='" + mType + '\'' +
+                ", mPoster='" + mPoster + '\'' +
+                '}';
     }
 }
