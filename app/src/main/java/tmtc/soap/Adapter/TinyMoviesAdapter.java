@@ -19,6 +19,8 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import tmtc.soap.Listener.ItemMovieListener;
+import tmtc.soap.Listener.MoviesListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.R;
 
@@ -26,14 +28,16 @@ import tmtc.soap.R;
  * Bad Boys Team
  * Created by remyjallan on 11/03/2016.
  */
-public class TinyMoviesAdapter extends RecyclerView.Adapter<TinyMoviesAdapterViewHolder> {
+public class TinyMoviesAdapter extends RecyclerView.Adapter<TinyMoviesAdapterViewHolder> implements ItemMovieListener.IPosition {
 
     private Context mContext;
     private List<Movie> mMovies;
+    private ItemMovieListener.IMovie mListener;
 
-    public TinyMoviesAdapter(Context context,List<Movie> movies) {
+    public TinyMoviesAdapter(Context context,List<Movie> movies,ItemMovieListener.IMovie listener) {
         this.mContext = context;
         this.mMovies = movies;
+        this.mListener = listener;
     }
 
     @Override
@@ -46,9 +50,9 @@ public class TinyMoviesAdapter extends RecyclerView.Adapter<TinyMoviesAdapterVie
     @Override
     public void onBindViewHolder(TinyMoviesAdapterViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
+        holder.setItemMovieListener(this);
         holder.mName.setText(movie.getName());
         Picasso.with(mContext).load(movie.getPoster()).into(holder.mPoster);
-
         holder.mRelease.setText(movie.getReleaseDate());
     }
 
@@ -56,9 +60,14 @@ public class TinyMoviesAdapter extends RecyclerView.Adapter<TinyMoviesAdapterVie
     public int getItemCount() {
         return mMovies.size();
     }
+
+    @Override
+    public void ItemMovieListenerOnClick(View view, int position) {
+        mListener.ItemMovieListenerOnClick(view,mMovies.get(position));
+    }
 }
 
-class TinyMoviesAdapterViewHolder extends RecyclerView.ViewHolder {
+class TinyMoviesAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @Bind(R.id.image_poster)
     protected ImageView mPoster;
@@ -67,8 +76,22 @@ class TinyMoviesAdapterViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.text_release)
     protected TextView mRelease;
 
+    private ItemMovieListener.IPosition mListener;
+
     public TinyMoviesAdapterViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
+    }
+
+    public void setItemMovieListener(ItemMovieListener.IPosition listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(mListener != null) {
+            mListener.ItemMovieListenerOnClick(view,getAdapterPosition());
+        }
     }
 }

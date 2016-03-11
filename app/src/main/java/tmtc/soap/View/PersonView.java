@@ -1,5 +1,7 @@
 package tmtc.soap.View;
 
+import android.view.View;
+
 import java.util.List;
 
 import tmtc.soap.Model.Movie;
@@ -12,4 +14,5 @@ import tmtc.soap.Model.MoviePerson;
 public interface PersonView extends BaseView {
     void init(MoviePerson person);
     void showMovies(List<Movie> movies);
+    void navigateToMovie(View view,Movie movie);
 }
