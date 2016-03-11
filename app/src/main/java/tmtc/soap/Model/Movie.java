@@ -2,6 +2,8 @@ package tmtc.soap.Model;
 import org.parceler.Parcel;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Bad Boys Team
@@ -14,9 +16,12 @@ public class Movie {
     private String mPoster;
     private String mSynopsis;
 
+    private ArrayList<MoviePerson> mPersons;
+
     public Movie() {} //Parcel required
 
     public Movie(String name) {
+        mPersons = new ArrayList<>();
         this.mName = name;
     }
 
@@ -50,6 +55,20 @@ public class Movie {
 
     public void setSynopsis(String synopsis) {
         mSynopsis = synopsis;
+    }
+
+    public ArrayList<MoviePerson> getPersons() {
+        return mPersons;
+    }
+
+    public void addPerson(MoviePerson person) {
+        if(!this.mPersons.contains(person)) {
+            this.mPersons.add(person);
+        }
+    }
+
+    public void setPersons(ArrayList<MoviePerson> persons) {
+        this.mPersons = persons;
     }
 
     @Override

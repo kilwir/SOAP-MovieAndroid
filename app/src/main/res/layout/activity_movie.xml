@@ -47,33 +47,13 @@
         android:stateListAnimator="@anim/fab"
         />
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_name_movie"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp">
+        android:id="@+id/view_pager_content"
+        android:layout_below="@id/text_name_movie">
 
-        <LinearLayout
-            android:id="@+id/activity_detail_book_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/header_synopsis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/SoapHeaderTextView"
-                android:text="Synopsis"/>
-            <TextView
-                android:id="@+id/text_synopsis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/SoapDetailField"/>
-        </LinearLayout>
-
-    </ScrollView>
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp">
+
+    <LinearLayout
+        android:id="@+id/activity_detail_book_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/header_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SoapHeaderTextView"
+            android:text="Synopsis"/>
+        <TextView
+            android:id="@+id/text_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SoapDetailField"/>
+    </LinearLayout>
+
+</ScrollView>
