@@ -1,5 +1,7 @@
 package tmtc.soap.View.Implementation;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import org.parceler.Parcels;
 
@@ -16,18 +19,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.MovieContentPagerAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
+import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Model.Movie;
+import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.Presenter.Implementation.MoviePresenterImpl;
 import tmtc.soap.Presenter.MoviePresenter;
 import tmtc.soap.R;
 import tmtc.soap.View.MovieView;
 import tmtc.soap.View.Template.BaseAppCompatActivity;
+import tmtc.soap.View.Template.DrawerAppCompatActivity;
 
 /**
  * Bad Boys Team
  * Created by remyjallan on 10/03/2016.
  */
-public class MovieActivity extends BaseAppCompatActivity implements MovieView, View.OnClickListener {
+public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson {
 
     private MoviePresenter mPresenter;
     private FragmentPagerAdapter mPagerAdapter;
@@ -36,45 +42,37 @@ public class MovieActivity extends BaseAppCompatActivity implements MovieView, V
     public TopCropImageView ImagePoster;
     @Bind(R.id.text_name_movie)
     public TextView TextNameMovie;
-    @Bind(R.id.toolbar)
-    public Toolbar Toolbar;
     @Bind(R.id.view_pager_content)
     public ViewPager ViewPagerContent;
+    @Bind(R.id.page_indicator_content)
+    public TitlePageIndicator PageIndicatorContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
         ButterKnife.bind(this);
+        this.init();
 
-        initToolbar();
         Logger.init("MovieActivity");
         mPresenter = new MoviePresenterImpl(this);
         mPresenter.init(getIntent());
 
     }
 
+    @Override
+    protected void init() {
+        super.init();
+    }
+
     private void initViewPager(Movie movie) {
-        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie);
+        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this);
         ViewPagerContent.setAdapter(mPagerAdapter);
+        PageIndicatorContent.setViewPager(ViewPagerContent);
     }
 
     @Override
     public void setupWindowAnimations() {
-    }
-
-    @Override
-    public void onClick(View view) {
-        this.navigateToMain();
-    }
-
-    public void initToolbar() {
-        if(Toolbar != null) {
-            setSupportActionBar(Toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            Toolbar.setNavigationOnClickListener(this);
-        }
     }
 
     @Override
@@ -89,5 +87,22 @@ public class MovieActivity extends BaseAppCompatActivity implements MovieView, V
     @Override
     public void navigateToMain() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void ItemPersonListenerOnClick(View view, MoviePerson person) {
+        this.navigateToPerson(view, person);
+    }
+
+    public void navigateToPerson(View view,MoviePerson person) {
+        Intent intent = new Intent(this,PersonActivity.class);
+        intent.putExtra("person", Parcels.wrap(person));
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MovieActivity.this,view,"picture_person");
+        startActivity(intent, activityOptions.toBundle());
+    }
+
+    @Override
+    protected void actionNavigationItemSelected(int id) {
+        Logger.d("Navigation -> " + id);
     }
 }

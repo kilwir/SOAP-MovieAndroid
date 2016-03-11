@@ -7,6 +7,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 
 import tmtc.soap.Fragment.FragmentMovieInformation;
 import tmtc.soap.Fragment.FragmentMoviePersons;
+import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Model.Movie;
 
 /**
@@ -14,29 +15,35 @@ import tmtc.soap.Model.Movie;
  * Created by remyjallan on 10/03/2016.
  */
 public class MovieContentPagerAdapter extends FragmentPagerAdapter {
-    private static int NUM_ITEM = 2;
     private Movie mMovie;
+    private ItemPersonListener.IPerson mListener;
 
     public MovieContentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public MovieContentPagerAdapter(FragmentManager fm, Movie movie) {
+    public MovieContentPagerAdapter(FragmentManager fm, Movie movie,ItemPersonListener.IPerson listener) {
         super(fm);
         this.mMovie = movie;
+        this.mListener = listener;
+    }
+
+    public void setItemPersonListener(ItemPersonListener.IPerson listener) {
+        mListener = listener;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                FragmentMovieInformation fragment = new FragmentMovieInformation();
-                fragment.setMovie(mMovie);
-                return fragment;
+                FragmentMovieInformation fragmentInformation = new FragmentMovieInformation();
+                fragmentInformation.setMovie(mMovie);
+                return fragmentInformation;
             case 1 :
-                FragmentMoviePersons fragment2 = new FragmentMoviePersons();
-                fragment2.setMovie(mMovie);
-                return fragment2;
+                FragmentMoviePersons fragmentPersons = new FragmentMoviePersons();
+                fragmentPersons.setMovie(mMovie);
+                fragmentPersons.setItemPersonListener(mListener);
+                return fragmentPersons;
             default:
                 return null;
         }
@@ -44,11 +51,18 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return NUM_ITEM;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Title " + position;
+        switch (position) {
+            case 0:
+                return "Information";
+            case 1:
+                return "Casting";
+            default:
+                return "";
+        }
     }
 }

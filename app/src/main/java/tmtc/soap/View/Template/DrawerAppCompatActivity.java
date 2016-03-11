@@ -20,31 +20,16 @@ import tmtc.soap.R;
  * Created by remyjallan on 09/03/2016.
  */
 public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @Bind(R.id.toolbar)
-    public Toolbar mToolbar;
     @Bind(R.id.drawer_main)
     public DrawerLayout mDrawer;
     @Bind(R.id.nav_drawer)
     public NavigationView mNavigationDrawer;
 
     protected void init() {
-        ButterKnife.bind(this);
-        initializeToolbar();
-        initializeDrawer();
+        initNavigationView();
     }
 
-    protected void initializeToolbar() {
-
-        setSupportActionBar(mToolbar);
-    }
-
-    protected void initializeDrawer() {
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
-                R.string.open_nagivation_drawer, R.string.close_navigation_drawer);
-        mDrawer.setDrawerListener(toggle);
-        toggle.syncState();
-
+    protected void initNavigationView() {
         mNavigationDrawer.setNavigationItemSelectedListener(this);
     }
 

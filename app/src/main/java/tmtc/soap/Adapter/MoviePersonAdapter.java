@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.R;
 
@@ -26,10 +27,15 @@ public class MoviePersonAdapter extends RecyclerView.Adapter<MoviePersonAdapterH
 
     private Context mContext;
     private List<MoviePerson> mPersons;
+    private ItemPersonListener.IPosition mListener;
 
     public MoviePersonAdapter(Context context, List<MoviePerson> persons) {
         this.mContext = context;
         this.mPersons = persons;
+    }
+
+    public void setItemPersonListener(ItemPersonListener.IPosition listener) {
+        this.mListener = listener;
     }
 
     @Override
@@ -46,6 +52,7 @@ public class MoviePersonAdapter extends RecyclerView.Adapter<MoviePersonAdapterH
         holder.mTextName.setText(person.getName());
         holder.mTextRole.setText(person.getRole());
         Picasso.with(mContext).load(person.getPicture()).into(holder.mImageProfil);
+        holder.setItemPersonListener(mListener);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class MoviePersonAdapter extends RecyclerView.Adapter<MoviePersonAdapterH
     }
 }
 
-class MoviePersonAdapterHolder extends RecyclerView.ViewHolder {
+class MoviePersonAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @Bind(R.id.text_name)
     protected TextView mTextName;
@@ -63,8 +70,22 @@ class MoviePersonAdapterHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.text_role)
     protected TextView mTextRole;
 
+    private ItemPersonListener.IPosition mListener;
+
     public MoviePersonAdapterHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
+    }
+
+    public void setItemPersonListener(ItemPersonListener.IPosition listener) {
+        this.mListener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(mListener != null) {
+            mListener.ItemPersonListenerOnClick(view,getAdapterPosition());
+        }
     }
 }

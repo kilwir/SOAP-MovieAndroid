@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.MoviePersonAdapter;
+import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.R;
@@ -26,8 +27,9 @@ import tmtc.soap.R;
  * Bad Boys Team
  * Created by remyjallan on 10/03/2016.
  */
-public class FragmentMoviePersons extends Fragment{
+public class FragmentMoviePersons extends Fragment implements ItemPersonListener.IPosition{
     private Movie mMovie;
+    private ItemPersonListener.IPerson mListener;
 
     @Bind(R.id.recycler_movie_persons)
     public RecyclerView RecyclerMoviePersons;
@@ -52,6 +54,7 @@ public class FragmentMoviePersons extends Fragment{
     public void loadContent() {
         if(RecyclerMoviePersons != null && mMovie != null) {
             MoviePersonAdapter adapter = new MoviePersonAdapter(getActivity(),mMovie.getPersons());
+            adapter.setItemPersonListener(this);
             RecyclerMoviePersons.setAdapter(adapter);
         }
     }
@@ -60,9 +63,20 @@ public class FragmentMoviePersons extends Fragment{
         this.mMovie = movie;
     }
 
+    public void setItemPersonListener(ItemPersonListener.IPerson listener) {
+        mListener = listener;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void ItemPersonListenerOnClick(View view, int position) {
+        if(mListener != null) {
+            mListener.ItemPersonListenerOnClick(view,mMovie.getPersons().get(position));
+        }
     }
 }

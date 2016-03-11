@@ -8,13 +8,15 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class MoviePerson {
+    private int mId;
     private String mName;
     private String mPicture;
     private String mRole;
 
     public MoviePerson() {}
 
-    public MoviePerson(String name,String role) {
+    public MoviePerson(int id,String name,String role) {
+        mId = id;
         mName = name;
         mRole = role;
     }
