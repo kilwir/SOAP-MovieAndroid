@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
+import tmtc.soap.Fragment.FragmentComments;
 import tmtc.soap.Fragment.FragmentMovieInformation;
 import tmtc.soap.Fragment.FragmentMoviePersons;
 import tmtc.soap.Listener.ItemPersonListener;
@@ -44,6 +45,10 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
                 fragmentPersons.setMovie(mMovie);
                 fragmentPersons.setItemPersonListener(mListener);
                 return fragmentPersons;
+            case 2:
+                FragmentComments fragmentComments = new FragmentComments();
+                fragmentComments.loadComments(mMovie);
+                return fragmentComments;
             default:
                 return null;
         }
@@ -51,7 +56,7 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -61,6 +66,8 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
                 return "Information";
             case 1:
                 return "Casting";
+            case 2:
+                return "Comments";
             default:
                 return "";
         }

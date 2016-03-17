@@ -34,7 +34,7 @@ public class MovieDataManager {
         String output = outputFormatter1.format(new Date());
 
         for(int i = 0; i< 10; i++){
-            Movie movie = new Movie("Deadpool");
+            Movie movie = new Movie(i,"Deadpool");
             movie.setReleaseDate(output);
             movie.setSynopsis("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie, tortor vitae luctus ullamcorper, ipsum ante laoreet dui, a congue ante libero quis orci. Ut convallis lectus felis, nec rutrum sapien viverra vitae. Suspendisse nec rutrum dui, ac venenatis lectus. Mauris semper lorem eu efficitur finibus. Vestibulum scelerisque posuere facilisis. Nullam commodo, est ac interdum sodales, quam ipsum viverra justo, at dapibus magna massa sed diam. Phasellus a pulvinar dolor. Nunc lacus erat, rutrum sed hendrerit convallis, sollicitudin et lacus. Aliquam euismod nisl at sollicitudin ultrices. Donec at purus sed justo accumsan ultricies.");
             if(i%2 == 0)

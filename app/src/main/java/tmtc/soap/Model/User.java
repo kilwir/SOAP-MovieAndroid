@@ -9,6 +9,10 @@ public class User {
     private String mPassword;
     private String mEmail;
 
+    public User(String username) {
+        mUsername = username;
+    }
+
     public User(String username, String password) {
         mUsername = username;
         mPassword = password;

@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Parcel
 public class Movie {
+    private int mId;
     private String mName;
     private String mReleaseDate;
     private String mPoster;
@@ -20,9 +21,18 @@ public class Movie {
 
     public Movie() {} //Parcel required
 
-    public Movie(String name) {
+    public Movie(int id,String name) {
         mPersons = new ArrayList<>();
         this.mName = name;
+        this.mId = id;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 
     public String getName() {
@@ -74,7 +84,8 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "mName='" + mName + '\'' +
+                "mId='" +mId +"\'"+
+                ", mName='" + mName + '\'' +
                 ", mReleaseDate='" + mReleaseDate + '\'' +
                 ", mPoster='" + mPoster + '\'' +
                 '}';
