@@ -68,11 +68,6 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
     }
 
     @Override
-    protected void actionNavigationItemSelected(int id) {
-
-    }
-
-    @Override
     public void init(MoviePerson person) {
         TextName.setText(person.getName());
         Picasso.with(this).load(person.getPicture()).into(ImageProfil);

@@ -92,15 +92,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
-    protected void actionNavigationItemSelected(int id) {
-        switch (id) {
-            case R.id.logout:
-                mPresenter.logout();
-                break;
-        }
-    }
-
-    @Override
     public void ItemMovieListenerOnClick(View view,Movie movie) {
         this.navigateToMovie(view,movie);
     }

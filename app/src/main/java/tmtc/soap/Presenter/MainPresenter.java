@@ -8,5 +8,4 @@ import tmtc.soap.Model.Movie;
  */
 public interface MainPresenter {
     void loadLastMovies();
-    void logout();
 }

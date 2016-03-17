@@ -100,9 +100,4 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MovieActivity.this,view,"picture_person");
         startActivity(intent, activityOptions.toBundle());
     }
-
-    @Override
-    protected void actionNavigationItemSelected(int id) {
-        Logger.d("Navigation -> " + id);
-    }
 }

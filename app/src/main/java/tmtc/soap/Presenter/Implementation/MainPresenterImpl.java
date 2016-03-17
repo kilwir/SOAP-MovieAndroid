@@ -29,12 +29,6 @@ public class MainPresenterImpl implements MainPresenter, MoviesListener {
     }
 
     @Override
-    public void logout() {
-        UserDataManager.getInstance().logout();
-        mView.navigateToLogin();
-    }
-
-    @Override
     public void OnMoviesSuccess(List<Movie> movies) {
         mView.hideProgress();
         mView.showLastMovies(movies);

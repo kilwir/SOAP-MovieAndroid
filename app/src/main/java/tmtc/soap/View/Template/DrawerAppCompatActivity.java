@@ -1,5 +1,6 @@
 package tmtc.soap.View.Template;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -13,7 +14,10 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.R;
+import tmtc.soap.View.Implementation.LoginActivity;
+import tmtc.soap.View.Implementation.MainActivity;
 
 /**
  * Bad Boys Team
@@ -51,5 +55,21 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
         return true;
     }
 
-    protected abstract void actionNavigationItemSelected(int id);
+    protected void actionNavigationItemSelected(int id) {
+        switch (id) {
+            case R.id.logout:
+                UserDataManager.getInstance().logout();
+                Intent intentLogin = new Intent(this, LoginActivity.class);
+                intentLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentLogin);
+                finish();
+            case R.id.last_exit:
+                Intent intentMain = new Intent(this, MainActivity.class);
+                intentMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentMain);
+                finish();
+        }
+    }
 }
