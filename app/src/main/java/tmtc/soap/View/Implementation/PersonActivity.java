@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import tmtc.soap.Adapter.TinyMoviesAdapter;
 import tmtc.soap.Listener.ItemMovieListener;
 import tmtc.soap.Model.Movie;
@@ -83,12 +84,31 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
         Intent intent = new Intent(this,MovieActivity.class);
         intent.putExtra("movie", Parcels.wrap(movie));
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(PersonActivity.this,view,"poster_movie");
-        startActivity(intent,activityOptions.toBundle());
+        startActivity(intent, activityOptions.toBundle());
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void navigateToMain() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void ItemMovieListenerOnClick(View view, Movie movie) {
-        this.navigateToMovie(view,movie);
+        this.navigateToMovie(view, movie);
+    }
+
+    @OnClick(R.id.fab_share)
+    public void sharePerson() {
+        this.shareText("Super film sur tmtc://person?id="+mPresenter.getPerson().getId());
     }
 
     private void initRecyclerView() {

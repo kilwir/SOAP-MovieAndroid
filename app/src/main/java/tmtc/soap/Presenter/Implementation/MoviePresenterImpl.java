@@ -37,8 +37,9 @@ public class MoviePresenterImpl implements MoviePresenter, MovieListener {
     public void init(Intent intent) {
         mMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
         if(mMovie == null) {
-            if(UserDataManager.getInstance().getCurrentUser() == null) {
+            if(!UserDataManager.getInstance().isConnected()) {
                 mView.navigateToLogin();
+                return;
             }
             mView.showProgress("Chargement ...");
             Uri data = intent.getData();

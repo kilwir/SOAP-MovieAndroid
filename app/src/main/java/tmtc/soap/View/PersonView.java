@@ -15,4 +15,6 @@ public interface PersonView extends BaseView {
     void init(MoviePerson person);
     void showMovies(List<Movie> movies);
     void navigateToMovie(View view,Movie movie);
+    void navigateToLogin();
+    void navigateToMain();
 }

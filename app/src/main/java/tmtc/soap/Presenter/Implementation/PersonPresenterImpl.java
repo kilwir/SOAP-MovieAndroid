@@ -1,13 +1,16 @@
 package tmtc.soap.Presenter.Implementation;
 
 import android.content.Intent;
+import android.net.Uri;
 
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import tmtc.soap.DataManager.MovieDataManager;
+import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MoviesListener;
+import tmtc.soap.Listener.PersonListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
@@ -18,7 +21,7 @@ import tmtc.soap.View.PersonView;
  * Bad Boys Team
  * Created by remyjallan on 11/03/2016.
  */
-public class PersonPresenterImpl implements PersonPresenter, MoviesListener {
+public class PersonPresenterImpl implements PersonPresenter, MoviesListener, PersonListener {
 
     private MoviePerson mPerson;
 
@@ -32,8 +35,23 @@ public class PersonPresenterImpl implements PersonPresenter, MoviesListener {
     public void init(Intent intent) {
         if(intent != null) {
             mPerson = Parcels.unwrap(intent.getParcelableExtra("person"));
-            mView.init(mPerson);
-            this.loadMovies();
+            if(mPerson == null) {
+                if(!UserDataManager.getInstance().isConnected()) {
+                    mView.navigateToLogin();
+                    return;
+                }
+                mView.showProgress("Loading...");
+                Uri data = intent.getData();
+                String id = data.getQueryParameter("id");
+                if(id != null) {
+                    MovieDataManager.getInstance().getPersonById(Integer.valueOf(id),this);
+                } else {
+                    mView.navigateToMain();
+                }
+            } else {
+                mView.init(mPerson);
+                this.loadMovies();
+            }
         }
     }
 
@@ -46,6 +64,11 @@ public class PersonPresenterImpl implements PersonPresenter, MoviesListener {
     }
 
     @Override
+    public MoviePerson getPerson() {
+        return this.mPerson;
+    }
+
+    @Override
     public void OnMoviesSuccess(List<Movie> movies) {
         mView.hideProgress();
         mView.showMovies(movies);
@@ -55,5 +78,20 @@ public class PersonPresenterImpl implements PersonPresenter, MoviesListener {
     public void OnMoviesError(ErrorContainer error) {
         mView.hideProgress();
         mView.showMessage(error.toString());
+    }
+
+    @Override
+    public void onPersonSuccess(MoviePerson person) {
+        mPerson = person;
+        mView.hideProgress();
+        mView.init(person);
+        this.loadMovies();
+    }
+
+    @Override
+    public void onPersonError(ErrorContainer error) {
+        mView.hideProgress();
+        mView.showMessage(error.Message);
+        mView.navigateToMain();
     }
 }

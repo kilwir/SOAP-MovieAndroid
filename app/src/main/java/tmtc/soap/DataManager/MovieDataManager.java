@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Listener.MoviesListener;
+import tmtc.soap.Listener.PersonListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 
@@ -87,5 +88,20 @@ public class MovieDataManager {
 
     public void getMovieForPerson(MoviePerson person,MoviesListener listener) {
         this.getLastMovies(listener);
+    }
+
+    public void getPersonById(int id, final PersonListener listener) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MoviePerson person = new MoviePerson();
+                person.setId(69);
+                person.setName("Jackie Michel");
+                person.setRole("Réalisateur");
+                person.setPicture("http://static1.purepeople.com/articles/9/13/20/59/@/1306777-leonardo-dicaprio-premiere-du-film-950x0-1.jpg");
+                listener.onPersonSuccess(person);
+            }
+        }, 1000);
     }
 }
