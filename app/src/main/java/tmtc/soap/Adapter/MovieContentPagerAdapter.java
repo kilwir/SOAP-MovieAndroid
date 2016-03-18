@@ -47,7 +47,7 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
                 return fragmentPersons;
             case 2:
                 FragmentComments fragmentComments = new FragmentComments();
-                fragmentComments.loadComments(mMovie);
+                fragmentComments.setMovie(mMovie);
                 return fragmentComments;
             default:
                 return null;

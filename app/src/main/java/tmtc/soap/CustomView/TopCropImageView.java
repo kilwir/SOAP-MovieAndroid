@@ -43,8 +43,12 @@ public class TopCropImageView extends ImageView {
     }
 
     private void recomputeImgMatrix() {
-        final Matrix matrix = getImageMatrix();
 
+        if(getDrawable() == null) {
+            return;
+        }
+
+        final Matrix matrix = getImageMatrix();
         float scale;
         final int viewWidth = getWidth() - getPaddingLeft() - getPaddingRight();
         final int viewHeight = getHeight() - getPaddingTop() - getPaddingBottom();

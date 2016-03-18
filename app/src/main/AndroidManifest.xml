@@ -21,6 +21,14 @@
         <activity android:name=".View.Implementation.MainActivity">
         </activity>
         <activity android:name=".View.Implementation.MovieActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.APP_BROWSER" />
+                <data android:scheme="tmtc"
+                      android:host="movie" />
+
+            </intent-filter>
         </activity>
         <activity android:name=".View.Implementation.PersonActivity">
         </activity>

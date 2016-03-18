@@ -9,4 +9,5 @@ public interface BaseView {
     void showProgress(String message);
     void hideProgress();
     void setupWindowAnimations();
+    void shareText(String text);
 }

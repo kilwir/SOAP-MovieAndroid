@@ -27,7 +27,6 @@ import tmtc.soap.Presenter.Implementation.PersonPresenterImpl;
 import tmtc.soap.Presenter.PersonPresenter;
 import tmtc.soap.R;
 import tmtc.soap.View.PersonView;
-import tmtc.soap.View.Template.BaseAppCompatActivity;
 import tmtc.soap.View.Template.DrawerAppCompatActivity;
 
 /**

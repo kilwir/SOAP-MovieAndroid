@@ -1,6 +1,9 @@
 package tmtc.soap.View;
 
+import android.view.View;
+
 import tmtc.soap.Model.Movie;
+import tmtc.soap.Model.MoviePerson;
 
 /**
  * Bad Boys Team
@@ -9,4 +12,6 @@ import tmtc.soap.Model.Movie;
 public interface MovieView extends BaseView {
     void init(Movie movie);
     void navigateToMain();
+    void navigateToPerson(View view,MoviePerson person);
+    void navigateToLogin();
 }

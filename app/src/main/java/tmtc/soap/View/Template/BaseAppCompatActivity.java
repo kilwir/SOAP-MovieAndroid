@@ -39,6 +39,15 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public void shareText(String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Partager à "));
+    }
+
     @SuppressWarnings("unchecked")
     protected void transitionTo(Intent i) {
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);

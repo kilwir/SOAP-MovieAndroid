@@ -3,7 +3,6 @@ package tmtc.soap.Presenter.Implementation;
 import java.util.List;
 
 import tmtc.soap.DataManager.MovieDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MoviesListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;

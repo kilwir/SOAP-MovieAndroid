@@ -1,5 +1,7 @@
 package tmtc.soap.DataManager;
 
+import android.os.Handler;
+
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -25,17 +27,23 @@ public class CommentDataManager {
         Logger.init("CommentDataManager");
     }
 
-    public void getMovieComment(Movie movie,CommentsListener listener) {
-        List<Comment> list  = new ArrayList<>();
-        User user = new User("Kiwi");
-        for(int i = 0; i < 5; i++) {
-            Comment comment = new Comment(i,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pretium libero a ligula tincidunt, porta malesuada mauris semper. Vivamus eu nisl nec augue egestas congue et id leo. Phasellus eget.",3.5,user);
-            comment.setCreateDate("2016/03/12");
-            list.add(comment);
-        }
-        if(movie.getId() % 2 == 0)
-            list.add( new Comment(69,"Super commentaire ma guele",4,UserDataManager.getInstance().getCurrentUser()) );
-        listener.OnCommentsSuccess(list);
+    public void getMovieComment(final Movie movie, final CommentsListener listener) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<Comment> list = new ArrayList<>();
+                User user = new User("Kiwi");
+                for (int i = 0; i < 5; i++) {
+                    Comment comment = new Comment(i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pretium libero a ligula tincidunt, porta malesuada mauris semper. Vivamus eu nisl nec augue egestas congue et id leo. Phasellus eget.", 3.5, user);
+                    comment.setCreateDate("2016/03/12");
+                    list.add(comment);
+                }
+                if (movie.getId() % 2 == 0)
+                    list.add(new Comment(69, "Super commentaire ma guele", 4, UserDataManager.getInstance().getCurrentUser()));
+                listener.OnCommentsSuccess(list);
+            }
+        }, 2000);
     }
 
     public void saveComment(Movie movie,Comment comment) {

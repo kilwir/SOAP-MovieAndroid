@@ -1,8 +1,10 @@
 package tmtc.soap.Fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
 
     @Bind(R.id.recycler_comments)
     public RecyclerView RecyclerComments;
+    @Bind(R.id.loader_comments)
+    public ProgressBar LoaderComments;
 
     private Movie mMovie;
     private List<Comment> mComments;
@@ -52,7 +57,9 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
         ButterKnife.bind(this, view);
         Logger.init("Comments Fragment");
         this.initRecyclerView();
-        this.loadContent();
+        if(mMovie != null) {
+            this.loadComments();
+        }
         return view;
     }
 
@@ -81,14 +88,18 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
         RecyclerComments.setLayoutManager(layoutManager);
     }
 
-    public void loadComments(Movie movie) {
-        if(mMovie == null)
-            mMovie = movie;
-        CommentDataManager.getInstance().getMovieComment(movie,this);
+    public void setMovie(Movie movie) {
+        mMovie = movie;
+    }
+
+    private void loadComments() {
+        showProgress();
+        CommentDataManager.getInstance().getMovieComment(mMovie, this);
     }
 
     @Override
     public void OnCommentsSuccess(List<Comment> comments) {
+        hideProgress();
         this.mComments = comments;
         for (Comment comment :
                 mComments) {
@@ -96,10 +107,12 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
                 mPersonalComment = comment;
             }
         }
+        this.loadContent();
     }
 
     @Override
     public void OnCommentsError(ErrorContainer error) {
+        hideProgress();
         this.mComments = new ArrayList<>();
         BaseAppCompatActivity activity = (BaseAppCompatActivity) getActivity();
         activity.showMessage(error.Message);
@@ -141,9 +154,17 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
             }
             CommentDataManager.getInstance().saveComment(mMovie,mPersonalComment);
             Toast.makeText(getActivity(), "Votre commentaire a bien été enregistré", Toast.LENGTH_LONG).show();
-            this.loadComments(mMovie);
+            this.loadComments();
         } else {
             Toast.makeText(getActivity(),"Votre commentaire est trop court",Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void showProgress() {
+        LoaderComments.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    public void hideProgress() {
+        LoaderComments.setVisibility(ProgressBar.INVISIBLE);
     }
 }
