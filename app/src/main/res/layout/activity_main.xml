@@ -18,8 +18,7 @@
         <include layout="@layout/toolbar"/>
 
         <fragment
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="tmtc.soap.Fragment.FragmentMovies"
             android:id="@+id/fragment_movies"

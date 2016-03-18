@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_margin="16dp"
+        android:id="@+id/input_layout_comment">
+        <EditText android:id="@+id/input_comment"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:inputType="textAutoComplete"
+                  android:hint="Commentaire"
+                  android:lines="2"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <RatingBar
+        android:layout_below="@id/input_layout_comment"
+        android:layout_width="wrap_content"
+        android:numStars="5"
+        android:rating="5.0"
+        android:stepSize="0.5"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/rating"/>
+
+</RelativeLayout>

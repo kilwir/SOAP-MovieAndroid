@@ -9,6 +9,7 @@ public class Comment {
     private String mContent;
     private double mRating;
     private User mUser;
+    private String mCreateDate;
 
     public Comment(int id, String content, double rating, User user) {
         mId = id;
@@ -47,5 +48,13 @@ public class Comment {
 
     public void setUser(User user) {
         mUser = user;
+    }
+
+    public String getCreateDate() {
+        return mCreateDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        mCreateDate = createDate;
     }
 }
