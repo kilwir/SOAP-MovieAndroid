@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class FragmentComments extends Fragment implements CommentsListener {
         RecyclerComments.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerComments.setItemAnimator(new DefaultItemAnimator());
+        RecyclerComments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
         RecyclerComments.setLayoutManager(layoutManager);
     }
 
