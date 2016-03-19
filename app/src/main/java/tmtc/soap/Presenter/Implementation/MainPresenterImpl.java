@@ -3,7 +3,7 @@ package tmtc.soap.Presenter.Implementation;
 import java.util.List;
 
 import tmtc.soap.DataManager.MovieDataManager;
-import tmtc.soap.Listener.MoviesListener;
+import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Presenter.MainPresenter;
@@ -13,7 +13,7 @@ import tmtc.soap.View.MainView;
  * Bad Boys Team
  * Created by remyjallan on 06/03/2016.
  */
-public class MainPresenterImpl implements MainPresenter, MoviesListener {
+public class MainPresenterImpl implements MainPresenter, MovieListener<List<Movie>> {
 
     private MainView mView;
 
@@ -28,13 +28,13 @@ public class MainPresenterImpl implements MainPresenter, MoviesListener {
     }
 
     @Override
-    public void OnMoviesSuccess(List<Movie> movies) {
+    public void OnMovieSuccess(List<Movie> movies) {
         mView.hideProgress();
         mView.showLastMovies(movies);
     }
 
     @Override
-    public void OnMoviesError(ErrorContainer error) {
+    public void OnMovieError(ErrorContainer error) {
         mView.hideProgress();
         mView.showMessage(error.toString());
     }

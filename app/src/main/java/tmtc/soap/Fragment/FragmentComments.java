@@ -41,7 +41,7 @@ import tmtc.soap.View.Template.BaseAppCompatActivity;
  * Bad Boys Team
  * Created by remyjallan on 17/03/2016.
  */
-public class FragmentComments extends Fragment implements CommentsListener,View.OnClickListener, MaterialDialog.SingleButtonCallback, ItemCommentListener.IPosition {
+public class FragmentComments extends Fragment implements CommentsListener<List<Comment>>,View.OnClickListener, MaterialDialog.SingleButtonCallback, ItemCommentListener.IPosition {
 
     @Bind(R.id.recycler_comments)
     public RecyclerView RecyclerComments;

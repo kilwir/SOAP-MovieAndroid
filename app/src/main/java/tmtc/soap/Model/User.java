@@ -53,4 +53,15 @@ public class User {
     public String toString() {
         return "User("+mUsername+","+mPassword+","+mEmail+")";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if( o instanceof User) {
+            User user = (User) o;
+            if(this.mUsername.equals(user.getUsername()) && this.mEmail.equals(user.getEmail())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

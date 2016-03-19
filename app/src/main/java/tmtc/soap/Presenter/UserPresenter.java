@@ -11,4 +11,5 @@ import tmtc.soap.Model.Movie;
 public interface UserPresenter {
     void init(Intent intent);
     void loadComments();
+    void checkStateFriend();
 }

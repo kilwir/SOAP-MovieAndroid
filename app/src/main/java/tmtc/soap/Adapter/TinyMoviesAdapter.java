@@ -20,7 +20,6 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Listener.ItemMovieListener;
-import tmtc.soap.Listener.MoviesListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.R;
 

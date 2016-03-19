@@ -19,7 +19,7 @@ import tmtc.soap.View.MovieView;
  * Bad Boys Team
  * Created by remyjallan on 10/03/2016.
  */
-public class MoviePresenterImpl implements MoviePresenter, MovieListener {
+public class MoviePresenterImpl implements MoviePresenter, MovieListener<Movie> {
     private MovieView mView;
 
     private Movie mMovie;

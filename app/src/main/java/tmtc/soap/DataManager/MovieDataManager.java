@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 
 import tmtc.soap.Listener.MovieListener;
-import tmtc.soap.Listener.MoviesListener;
 import tmtc.soap.Listener.PersonListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
@@ -31,7 +30,7 @@ public class MovieDataManager {
     private MovieDataManager() {
     }
 
-    public void getLastMovies(final MoviesListener listener) {
+    public void getLastMovies(final MovieListener<List<Movie>> listener) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -57,13 +56,12 @@ public class MovieDataManager {
                     }
                     movies.add(movie);
                 }
-
-                listener.OnMoviesSuccess(movies);
+                listener.OnMovieSuccess(movies);
             }
         }, 1000);
     }
 
-    public void getMovieById(final int id, final MovieListener listener) {
+    public void getMovieById(final int id, final MovieListener<Movie> listener) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -86,7 +84,7 @@ public class MovieDataManager {
         }, 1000);
     }
 
-    public void getMovieForPerson(MoviePerson person,MoviesListener listener) {
+    public void getMovieForPerson(MoviePerson person,MovieListener<List<Movie>> listener) {
         this.getLastMovies(listener);
     }
 

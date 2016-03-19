@@ -17,4 +17,7 @@ public interface UserView extends BaseView {
     void showUser(User user);
     void showComments(List<Comment> comments);
     void navigateToMovie(View view,Movie movie);
+    void hideFab();
+    void fabAlreadyFriend();
+    void fabNotFriend();
 }

@@ -9,7 +9,7 @@ import tmtc.soap.Model.ErrorContainer;
  * Bad Boys Team
  * Created by remyjallan on 17/03/2016.
  */
-public interface CommentsListener {
-    void OnCommentsSuccess(List<Comment> comments);
+public interface CommentsListener<T> {
+    void OnCommentsSuccess(T comments);
     void OnCommentsError(ErrorContainer error);
 }

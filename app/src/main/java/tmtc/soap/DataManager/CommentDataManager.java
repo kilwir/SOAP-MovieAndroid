@@ -28,7 +28,7 @@ public class CommentDataManager {
         Logger.init("CommentDataManager");
     }
 
-    public void getMovieComment(final Movie movie, final CommentsListener listener) {
+    public void getMovieComment(final Movie movie, final CommentsListener<List<Comment>> listener) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -47,7 +47,7 @@ public class CommentDataManager {
         }, 200);
     }
 
-    public void getUserComment(final User user,final CommentsListener listener ) {
+    public void getUserComment(final User user,final CommentsListener<List<Comment>> listener ) {
         Handler handler = new Handler();
         handler.postDelayed(
                 new Runnable() {

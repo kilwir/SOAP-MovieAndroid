@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,8 +48,18 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView, I
     RecyclerView RecyclerComments;
     @Bind(R.id.loader_comments)
     ProgressBar ProgressComments;
+    @Bind(R.id.fab_user)
+    ImageButton FabUser;
 
     UserPresenter mPresenter;
+
+    private void initRecyclerView() {
+        RecyclerComments.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerComments.setItemAnimator(new DefaultItemAnimator());
+        RecyclerComments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
+        RecyclerComments.setLayoutManager(layoutManager);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,7 +106,22 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView, I
         Intent intent = new Intent(this,MovieActivity.class);
         intent.putExtra("movie", Parcels.wrap(movie));
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(UserActivity.this,view,"poster_movie");
-        startActivity(intent,activityOptions.toBundle());
+        startActivity(intent, activityOptions.toBundle());
+    }
+
+    @Override
+    public void hideFab() {
+        FabUser.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void fabAlreadyFriend() {
+        FabUser.setImageDrawable(getDrawable(R.drawable.ic_person_24dp));
+    }
+
+    @Override
+    public void fabNotFriend() {
+        FabUser.setImageDrawable(getDrawable(R.drawable.ic_person_add_24dp));
     }
 
     @Override
@@ -106,14 +132,6 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView, I
     @Override
     public void hideProgress() {
         ProgressComments.setVisibility(ProgressBar.INVISIBLE);
-    }
-
-    private void initRecyclerView() {
-        RecyclerComments.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerComments.setItemAnimator(new DefaultItemAnimator());
-        RecyclerComments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
-        RecyclerComments.setLayoutManager(layoutManager);
     }
 
     @Override

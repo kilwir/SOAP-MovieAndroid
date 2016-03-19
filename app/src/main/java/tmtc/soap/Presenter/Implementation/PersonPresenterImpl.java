@@ -9,7 +9,7 @@ import java.util.List;
 
 import tmtc.soap.DataManager.MovieDataManager;
 import tmtc.soap.DataManager.UserDataManager;
-import tmtc.soap.Listener.MoviesListener;
+import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Listener.PersonListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
@@ -21,7 +21,7 @@ import tmtc.soap.View.PersonView;
  * Bad Boys Team
  * Created by remyjallan on 11/03/2016.
  */
-public class PersonPresenterImpl implements PersonPresenter, MoviesListener, PersonListener {
+public class PersonPresenterImpl implements PersonPresenter, MovieListener<List<Movie>>, PersonListener {
 
     private MoviePerson mPerson;
 
@@ -69,13 +69,13 @@ public class PersonPresenterImpl implements PersonPresenter, MoviesListener, Per
     }
 
     @Override
-    public void OnMoviesSuccess(List<Movie> movies) {
+    public void OnMovieSuccess(List<Movie> movies) {
         mView.hideProgress();
         mView.showMovies(movies);
     }
 
     @Override
-    public void OnMoviesError(ErrorContainer error) {
+    public void OnMovieError(ErrorContainer error) {
         mView.hideProgress();
         mView.showMessage(error.toString());
     }
