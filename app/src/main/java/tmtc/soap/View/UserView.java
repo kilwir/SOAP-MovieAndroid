@@ -1,5 +1,8 @@
 package tmtc.soap.View;
 
+import java.util.List;
+
+import tmtc.soap.Model.Comment;
 import tmtc.soap.Model.User;
 
 /**
@@ -9,4 +12,5 @@ import tmtc.soap.Model.User;
 public interface UserView extends BaseView {
     void navigateToMain();
     void showUser(User user);
+    void showComments(List<Comment> comments);
 }

@@ -167,7 +167,7 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
 
         if(inputComment.getText().length() > 3) {
             if(mPersonalComment == null)
-                mPersonalComment = new Comment(-1,inputComment.getText().toString(),rating.getRating(), UserDataManager.getInstance().getCurrentUser());
+                mPersonalComment = new Comment(-1,inputComment.getText().toString(),rating.getRating(), UserDataManager.getInstance().getCurrentUser(),mMovie);
             else {
                 mPersonalComment.setContent(inputComment.getText().toString());
                 mPersonalComment.setRating(rating.getRating());

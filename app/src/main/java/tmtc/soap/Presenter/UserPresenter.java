@@ -8,4 +8,5 @@ import android.content.Intent;
  */
 public interface UserPresenter {
     void init(Intent intent);
+    void loadComments();
 }

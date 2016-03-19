@@ -9,13 +9,15 @@ public class Comment {
     private String mContent;
     private double mRating;
     private User mUser;
+    private Movie mMovie;
     private String mCreateDate;
 
-    public Comment(int id, String content, double rating, User user) {
+    public Comment(int id, String content, double rating, User user, Movie movie) {
         mId = id;
         mContent = content;
         mRating = rating;
         mUser = user;
+        mMovie = movie;
     }
 
     public int getId() {
@@ -48,6 +50,14 @@ public class Comment {
 
     public void setUser(User user) {
         mUser = user;
+    }
+
+    public Movie getMovie() {
+        return mMovie;
+    }
+
+    public void setMovie(Movie movie) {
+        mMovie = movie;
     }
 
     public String getCreateDate() {
