@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -44,6 +45,8 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
     TextView TextName;
     @Bind(R.id.recycler_movies)
     RecyclerView RecyclerMovies;
+    @Bind(R.id.loader_movie)
+    ProgressBar ProgressMovie;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,16 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
     @OnClick(R.id.fab_share)
     public void sharePerson() {
         this.shareText("Super film sur tmtc://person?id="+mPresenter.getPerson().getId());
+    }
+
+    @Override
+    public void showProgress(String message) {
+        ProgressMovie.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        ProgressMovie.setVisibility(ProgressBar.INVISIBLE);
     }
 
     private void initRecyclerView() {

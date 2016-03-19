@@ -61,6 +61,15 @@ android:theme="@style/SoapTheme">
                 />
         </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/loader_movie"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relative_top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_below="@id/relative_top"
             android:id="@+id/recycler_movies"
