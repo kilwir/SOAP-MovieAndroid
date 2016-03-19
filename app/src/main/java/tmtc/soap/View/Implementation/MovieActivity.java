@@ -24,6 +24,7 @@ import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Model.Comment;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
+import tmtc.soap.Model.User;
 import tmtc.soap.Presenter.Implementation.MoviePresenterImpl;
 import tmtc.soap.Presenter.MoviePresenter;
 import tmtc.soap.R;
@@ -73,10 +74,6 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     }
 
     @Override
-    public void setupWindowAnimations() {
-    }
-
-    @Override
     public void init(Movie movie) {
         Picasso.with(this)
                 .load(movie.getPoster())
@@ -110,6 +107,13 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
         finish();
     }
 
+    @Override
+    public void navigateToUser(User user) {
+        Intent intent = new Intent(this,UserActivity.class);
+        intent.putExtra("user",Parcels.wrap(user));
+        transitionTo(intent);
+    }
+
     @OnClick(R.id.fab_share)
     public void shareMovie() {
         this.shareText("Super film sur tmtc://movie?id="+mPresenter.getMovie().getId());
@@ -117,6 +121,8 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
 
     @Override
     public void ItemCommentClickListener(View view, Comment comment) {
-        Logger.d("Comment clicked ! -> "+comment.getId() );
+        if(comment != null && comment.getUser() != null) {
+            this.navigateToUser(comment.getUser());
+        }
     }
 }

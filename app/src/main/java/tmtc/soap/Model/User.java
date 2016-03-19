@@ -1,13 +1,20 @@
 package tmtc.soap.Model;
 
+import org.parceler.Parcel;
+
 /**
  * Bad Boys Team
  * Created by remyjallan on 18/02/2016.
  */
+@Parcel
 public class User {
     private String mUsername;
     private String mPassword;
     private String mEmail;
+
+    public User(){
+
+    }
 
     public User(String username) {
         mUsername = username;

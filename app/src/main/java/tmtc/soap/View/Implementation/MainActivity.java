@@ -63,11 +63,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
-    public void setupWindowAnimations() {
-
-    }
-
-    @Override
     public void showLastMovies(List<Movie> movies) {
         FragmentMovies fragmentMovies = (FragmentMovies) getFragmentManager().findFragmentById(R.id.fragment_movies);
         if(fragmentMovies != null) {

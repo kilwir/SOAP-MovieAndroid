@@ -31,6 +31,11 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
     }
 
     @Override
+    public void setupWindowAnimations() {
+        return;
+    }
+
+    @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);

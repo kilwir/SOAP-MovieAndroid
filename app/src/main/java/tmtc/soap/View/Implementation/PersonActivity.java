@@ -63,11 +63,6 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
     }
 
     @Override
-    public void setupWindowAnimations() {
-
-    }
-
-    @Override
     public void init(MoviePerson person) {
         TextName.setText(person.getName());
         Picasso.with(this).load(person.getPicture()).into(ImageProfil);

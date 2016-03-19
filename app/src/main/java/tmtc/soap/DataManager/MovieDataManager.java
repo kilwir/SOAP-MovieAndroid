@@ -60,7 +60,7 @@ public class MovieDataManager {
 
                 listener.OnMoviesSuccess(movies);
             }
-        }, 3000);
+        }, 1000);
     }
 
     public void getMovieById(final int id, final MovieListener listener) {

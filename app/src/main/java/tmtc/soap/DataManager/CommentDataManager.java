@@ -43,7 +43,7 @@ public class CommentDataManager {
                     list.add(new Comment(69, "Super commentaire ma guele", 4, UserDataManager.getInstance().getCurrentUser()));
                 listener.OnCommentsSuccess(list);
             }
-        }, 2000);
+        }, 200);
     }
 
     public void saveComment(Movie movie,Comment comment) {
