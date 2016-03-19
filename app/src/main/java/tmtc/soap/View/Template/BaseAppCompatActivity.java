@@ -2,6 +2,8 @@ package tmtc.soap.View.Template;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,12 @@ import tmtc.soap.View.BaseView;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity implements BaseView {
     protected ProgressDialog mProgressDialog;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     @Override
     public void showMessage(String message) {
