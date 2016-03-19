@@ -30,6 +30,7 @@ import tmtc.soap.Adapter.CommentsAdapter;
 import tmtc.soap.DataManager.CommentDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.CommentsListener;
+import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Model.Comment;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
@@ -40,7 +41,7 @@ import tmtc.soap.View.Template.BaseAppCompatActivity;
  * Bad Boys Team
  * Created by remyjallan on 17/03/2016.
  */
-public class FragmentComments extends Fragment implements CommentsListener,View.OnClickListener, MaterialDialog.SingleButtonCallback {
+public class FragmentComments extends Fragment implements CommentsListener,View.OnClickListener, MaterialDialog.SingleButtonCallback, ItemCommentListener.IPosition {
 
     @Bind(R.id.recycler_comments)
     public RecyclerView RecyclerComments;
@@ -50,6 +51,8 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
     private Movie mMovie;
     private List<Comment> mComments;
     private Comment mPersonalComment;
+
+    private ItemCommentListener.IComment mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +78,8 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
             if(mPersonalComment != null)
                 personalExsit = true;
             CommentsAdapter adapter = new CommentsAdapter(getActivity(),mComments,personalExsit);
-            adapter.setClickListener(this);
+            adapter.setButtonListener(this);
+            adapter.setItemListener(this);
             RecyclerComments.setAdapter(adapter);
         }
     }
@@ -93,8 +97,24 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
     }
 
     private void loadComments() {
-        showProgress();
-        CommentDataManager.getInstance().getMovieComment(mMovie, this);
+        if(mComments == null) {
+            showProgress();
+            CommentDataManager.getInstance().getMovieComment(mMovie, this);
+        } else {
+            loadContent();
+        }
+    }
+
+    public void setItemListener(ItemCommentListener.IComment listener) {
+        mListener = listener;
+    }
+
+    public void showProgress() {
+        LoaderComments.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    public void hideProgress() {
+        LoaderComments.setVisibility(ProgressBar.INVISIBLE);
     }
 
     @Override
@@ -160,11 +180,10 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
         }
     }
 
-    public void showProgress() {
-        LoaderComments.setVisibility(ProgressBar.VISIBLE);
-    }
-
-    public void hideProgress() {
-        LoaderComments.setVisibility(ProgressBar.INVISIBLE);
+    @Override
+    public void ItemCommentCLickListener(View view, int position) {
+        if(mListener != null && mComments != null) {
+            mListener.ItemCommentClickListener(view,mComments.get(position));
+        }
     }
 }

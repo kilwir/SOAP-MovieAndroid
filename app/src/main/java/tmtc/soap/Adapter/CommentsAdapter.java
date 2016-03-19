@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Model.Comment;
 import tmtc.soap.R;
 
@@ -30,6 +31,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<Comment> mComments;
     private View.OnClickListener mClickListener;
     private boolean mPersonalCommentExist;
+    private ItemCommentListener.IPosition mListener;
+
 
     public CommentsAdapter(Context context,List<Comment> comments,boolean personalCommentExist) {
         this.mComments = comments;
@@ -37,7 +40,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.mPersonalCommentExist = personalCommentExist;
     }
 
-    public void setClickListener(View.OnClickListener clickListener) {
+    public void setItemListener(ItemCommentListener.IPosition listener) {
+        mListener = listener;
+    }
+
+    public void setButtonListener(View.OnClickListener clickListener) {
         mClickListener = clickListener;
     }
 
@@ -65,6 +72,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemHolder.mName.setText(comment.getUser().getUsername());
             itemHolder.mRating.setText(comment.getRating() + "/5");
             itemHolder.mContent.setText(comment.getContent());
+            itemHolder.setListener(mListener);
             Picasso.with(mContext)
                     .load("http://smartyvet.com/site/wp-content/uploads/2014/05/red-panda-5.jpg")
                     .into(itemHolder.mPicture);
@@ -101,7 +109,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 }
 
-class CommentsAdapterItemViewHolder extends RecyclerView.ViewHolder{
+class CommentsAdapterItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @Bind(R.id.image_profile)
     protected ImageView mPicture;
@@ -112,9 +120,22 @@ class CommentsAdapterItemViewHolder extends RecyclerView.ViewHolder{
     @Bind(R.id.text_content)
     protected TextView mContent;
 
+    protected ItemCommentListener.IPosition mListener;
+
+    public void setListener(ItemCommentListener.IPosition listener) {
+        mListener = listener;
+    }
+
     public CommentsAdapterItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(mListener != null)
+            mListener.ItemCommentCLickListener(view,getAdapterPosition()-1);
     }
 }
 

@@ -19,7 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tmtc.soap.Adapter.MovieContentPagerAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
+import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Listener.ItemPersonListener;
+import tmtc.soap.Model.Comment;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.Presenter.Implementation.MoviePresenterImpl;
@@ -33,7 +35,7 @@ import tmtc.soap.View.Template.DrawerAppCompatActivity;
  * Created by remyjallan on 10/03/2016.
  */
 
-public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson {
+public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson, ItemCommentListener.IComment {
 
     private MoviePresenter mPresenter;
     private FragmentPagerAdapter mPagerAdapter;
@@ -48,7 +50,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     public TitlePageIndicator PageIndicatorContent;
 
     private void initViewPager(Movie movie) {
-        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this);
+        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this,this);
         ViewPagerContent.setAdapter(mPagerAdapter);
         PageIndicatorContent.setViewPager(ViewPagerContent);
     }
@@ -111,5 +113,10 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     @OnClick(R.id.fab_share)
     public void shareMovie() {
         this.shareText("Super film sur tmtc://movie?id="+mPresenter.getMovie().getId());
+    }
+
+    @Override
+    public void ItemCommentClickListener(View view, Comment comment) {
+        Logger.d("Comment clicked ! -> "+comment.getId() );
     }
 }
