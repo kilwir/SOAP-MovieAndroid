@@ -89,6 +89,26 @@ public class UserDataManager {
         },300);
     }
 
+    public void addFriend(User user ,final UserListener<Boolean> listener) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.OnUserSuccess(true);
+            }
+        },300);
+    }
+
+    public void deleteFriend(User user, final UserListener<Boolean> listener) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.OnUserSuccess(true);
+            }
+        },300);
+    }
+
     private void deleteUserOnLocal() {
         if(mContext == null){
             return;

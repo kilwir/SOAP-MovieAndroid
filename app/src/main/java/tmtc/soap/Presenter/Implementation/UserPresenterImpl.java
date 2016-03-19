@@ -27,6 +27,7 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     private UserView mView;
     private User mUser;
+    private Boolean mIsFriend;
 
     public UserPresenterImpl(UserView view) {
         mView = view;
@@ -64,6 +65,37 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
     }
 
     @Override
+    public void performFabFriend() {
+        if(mIsFriend) {
+            UserDataManager.getInstance().deleteFriend(mUser, new UserListener<Boolean>() {
+                @Override
+                public void OnUserSuccess(Boolean response) {
+                    mIsFriend = false;
+                    mView.fabNotFriend();
+                }
+
+                @Override
+                public void OnUserError(ErrorContainer error) {
+                    mView.showMessage(error.Message);
+                }
+            });
+        } else {
+            UserDataManager.getInstance().addFriend(mUser, new UserListener<Boolean>() {
+                @Override
+                public void OnUserSuccess(Boolean response) {
+                    mIsFriend = true;
+                    mView.fabAlreadyFriend();
+                }
+
+                @Override
+                public void OnUserError(ErrorContainer error) {
+                    mView.showMessage(error.Message);
+                }
+            });
+        }
+    }
+
+    @Override
     public void OnCommentsSuccess(List<Comment> comments) {
         mView.hideProgress();
         mView.showComments(comments);
@@ -77,6 +109,7 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     @Override
     public void OnUserSuccess(Boolean response) {
+        mIsFriend = response;
         if(response) {
             mView.fabAlreadyFriend();
         } else {

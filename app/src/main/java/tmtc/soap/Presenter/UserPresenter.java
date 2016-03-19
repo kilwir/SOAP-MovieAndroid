@@ -12,4 +12,5 @@ public interface UserPresenter {
     void init(Intent intent);
     void loadComments();
     void checkStateFriend();
+    void performFabFriend();
 }

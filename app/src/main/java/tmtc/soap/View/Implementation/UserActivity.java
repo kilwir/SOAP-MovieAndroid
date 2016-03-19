@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import tmtc.soap.Adapter.CommentsUserAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
 import tmtc.soap.Listener.ItemCommentListener;
@@ -136,6 +137,11 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView, I
 
     @Override
     public void ItemCommentClickListener(View view, Comment comment) {
-        this.navigateToMovie(view,comment.getMovie());
+        this.navigateToMovie(view, comment.getMovie());
+    }
+
+    @OnClick(R.id.fab_user)
+    public void FabFriendCallback(){
+        mPresenter.performFabFriend();
     }
 }
