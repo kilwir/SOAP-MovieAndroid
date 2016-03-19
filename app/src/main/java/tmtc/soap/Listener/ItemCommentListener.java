@@ -10,7 +10,7 @@ import tmtc.soap.Model.Comment;
  */
 public abstract class ItemCommentListener {
     public interface IPosition {
-        void ItemCommentCLickListener(View view, int position);
+        void ItemCommentClickListener(View view, int position);
     }
     public interface IComment {
         void ItemCommentClickListener(View view, Comment comment);

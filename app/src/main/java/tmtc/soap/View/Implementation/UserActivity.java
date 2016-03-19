@@ -1,11 +1,13 @@
 package tmtc.soap.View.Implementation;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,13 +15,17 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.CommentsUserAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
+import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Model.Comment;
+import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.User;
 import tmtc.soap.Presenter.Implementation.UserPresenterImpl;
 import tmtc.soap.Presenter.UserPresenter;
@@ -31,7 +37,7 @@ import tmtc.soap.View.UserView;
  * Bad Boys Team
  * Created by remyjallan on 19/03/2016.
  */
-public class UserActivity extends DrawerAppCompatActivity implements UserView {
+public class UserActivity extends DrawerAppCompatActivity implements UserView, ItemCommentListener.IComment {
 
     @Bind(R.id.image_picture)
     ImageView ImagePicture;
@@ -80,7 +86,16 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView {
     @Override
     public void showComments(List<Comment> comments) {
         CommentsUserAdapter adapter = new CommentsUserAdapter(getApplicationContext(),comments);
+        adapter.setListener(this);
         RecyclerComments.setAdapter(adapter);
+    }
+
+    @Override
+    public void navigateToMovie(View view, Movie movie) {
+        Intent intent = new Intent(this,MovieActivity.class);
+        intent.putExtra("movie", Parcels.wrap(movie));
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(UserActivity.this,view,"poster_movie");
+        startActivity(intent,activityOptions.toBundle());
     }
 
     @Override
@@ -99,5 +114,10 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView {
         RecyclerComments.setItemAnimator(new DefaultItemAnimator());
         RecyclerComments.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
         RecyclerComments.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void ItemCommentClickListener(View view, Comment comment) {
+        this.navigateToMovie(view,comment.getMovie());
     }
 }

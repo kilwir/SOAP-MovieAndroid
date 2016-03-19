@@ -61,7 +61,7 @@ public class CommentDataManager {
                         ArrayList<MoviePerson> persons = new ArrayList<MoviePerson>();
 
                         for(int i = 0; i < 5;i++) {
-                            persons.add(new MoviePerson(i,"Rocky la poutre","Producteur"));
+                            persons.add(new MoviePerson(i,"Rocky la poutre","Producteur","http://henrycavill.org/images/Events/2015-07-23-1/Henry-Cavill-UNCLE-press-031.jpg"));
                         }
 
                         movie.setPersons(persons);

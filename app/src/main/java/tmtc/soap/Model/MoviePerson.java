@@ -21,6 +21,13 @@ public class MoviePerson {
         mRole = role;
     }
 
+    public MoviePerson(int id, String name, String role, String picture) {
+        mId = id;
+        mName = name;
+        mRole = role;
+        mPicture = picture;
+    }
+
     public int getId() {
         return mId;
     }

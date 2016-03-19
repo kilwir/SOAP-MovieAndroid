@@ -20,7 +20,7 @@ android:theme="@style/SoapTheme">
             android:background="?attr/colorPrimaryDark"
             android:id="@+id/relative_top">
 
-            <ImageView
+            <tmtc.soap.CustomView.TopCropImageView
                 android:layout_centerHorizontal="true"
                 android:id="@+id/image_profile"
                 android:layout_width="match_parent"

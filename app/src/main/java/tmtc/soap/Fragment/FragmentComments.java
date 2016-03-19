@@ -181,7 +181,7 @@ public class FragmentComments extends Fragment implements CommentsListener,View.
     }
 
     @Override
-    public void ItemCommentCLickListener(View view, int position) {
+    public void ItemCommentClickListener(View view, int position) {
         if(mListener != null && mComments != null) {
             mListener.ItemCommentClickListener(view,mComments.get(position));
         }

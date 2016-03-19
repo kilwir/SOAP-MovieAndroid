@@ -135,7 +135,7 @@ class CommentsAdapterItemViewHolder extends RecyclerView.ViewHolder implements V
     @Override
     public void onClick(View view) {
         if(mListener != null)
-            mListener.ItemCommentCLickListener(view,getAdapterPosition()-1);
+            mListener.ItemCommentClickListener(view,getAdapterPosition()-1);
     }
 }
 
