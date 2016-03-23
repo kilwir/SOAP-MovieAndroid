@@ -7,7 +7,10 @@ import org.parceler.Parcel;
  * Created by remyjallan on 10/03/2016.
  */
 @Parcel
-public class MoviePerson {
+public class MoviePerson implements SearchItem {
+
+    public final static int ID = 1;
+
     private int mId;
     private String mName;
     private String mPicture;
@@ -58,5 +61,10 @@ public class MoviePerson {
 
     public void setRole(String role) {
         mRole = role;
+    }
+
+    @Override
+    public int getIdType() {
+        return ID;
     }
 }

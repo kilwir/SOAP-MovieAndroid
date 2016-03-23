@@ -14,4 +14,5 @@ public interface MainView extends BaseView {
     void showLastMovies(List<Movie> movies);
     void navigateToLogin();
     void navigateToMovie(View movieView,Movie movie);
+    void navigateToSearch(String query);
 }

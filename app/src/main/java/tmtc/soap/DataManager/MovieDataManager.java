@@ -96,7 +96,6 @@ public class MovieDataManager {
                 MoviePerson person = new MoviePerson();
                 person.setId(69);
                 person.setName("Jackie Michel");
-                person.setRole("Réalisateur");
                 person.setPicture("http://static1.purepeople.com/articles/9/13/20/59/@/1306777-leonardo-dicaprio-premiere-du-film-950x0-1.jpg");
                 listener.onPersonSuccess(person);
             }

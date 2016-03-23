@@ -66,16 +66,15 @@ public class UserActivity extends DrawerAppCompatActivity implements UserView, I
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        ButterKnife.bind(this);
-        mPresenter = new UserPresenterImpl(this);
         this.init();
+        mPresenter = new UserPresenterImpl(this);
+        mPresenter.init(getIntent());
     }
 
     @Override
     protected void init() {
         super.init();
         this.initRecyclerView();
-        mPresenter.init(getIntent());
     }
 
     @Override

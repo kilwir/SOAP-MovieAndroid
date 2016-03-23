@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.R;
 import tmtc.soap.View.Implementation.LoginActivity;
@@ -23,6 +24,7 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
     public NavigationView mNavigationDrawer;
 
     protected void init() {
+        ButterKnife.bind(this);
         initNavigationView();
     }
 

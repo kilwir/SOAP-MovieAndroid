@@ -10,7 +10,10 @@ import java.util.List;
  * Created by remyjallan on 09/03/2016.
  */
 @Parcel
-public class Movie {
+public class Movie implements SearchItem {
+
+    public final static int ID = 0;
+
     private int mId;
     private String mName;
     private String mReleaseDate;
@@ -89,5 +92,10 @@ public class Movie {
                 ", mReleaseDate='" + mReleaseDate + '\'' +
                 ", mPoster='" + mPoster + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getIdType() {
+        return ID;
     }
 }

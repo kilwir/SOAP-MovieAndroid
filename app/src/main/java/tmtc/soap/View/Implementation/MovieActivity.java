@@ -60,17 +60,11 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
-        ButterKnife.bind(this);
         this.init();
         Logger.init("MovieActivity");
         mPresenter = new MoviePresenterImpl(this);
         mPresenter.init(getIntent());
 
-    }
-
-    @Override
-    protected void init() {
-        super.init();
     }
 
     @Override

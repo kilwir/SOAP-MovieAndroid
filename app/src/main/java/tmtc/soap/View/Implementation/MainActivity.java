@@ -15,12 +15,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.logger.Logger;
 
 import org.parceler.Parcels;
@@ -39,18 +42,18 @@ import tmtc.soap.R;
 import tmtc.soap.View.Template.DrawerAppCompatActivity;
 import tmtc.soap.View.MainView;
 
-public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener, ItemMovieListener.IMovie {
+public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener, ItemMovieListener.IMovie, MaterialSearchView.OnQueryTextListener {
 
     @Bind(R.id.toolbar)
     public Toolbar mToolbar;
-
+    @Bind(R.id.search_view)
+    public MaterialSearchView SearchView;
     private MainPresenter mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         this.init();
 
@@ -64,13 +67,14 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
         super.init();
         initializeToolbar();
         initializeDrawer();
+        SearchView.setOnQueryTextListener(this);
     }
 
     protected void initializeDrawer() {
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
                 R.string.open_nagivation_drawer, R.string.close_navigation_drawer);
-        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -103,6 +107,13 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
+    public void navigateToSearch(String query) {
+        Intent intent = new Intent(this,SearchActivity.class);
+        intent.putExtra("query",query);
+        transitionTo(intent);
+    }
+
+    @Override
     public void ItemMovieListenerOnClick(View view,Movie movie) {
         this.navigateToMovie(view, movie);
     }
@@ -113,6 +124,7 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
         //Set icon color
         MenuItem item = menu.findItem(R.id.action_search);
         item.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        SearchView.setMenuItem(item);
         return true;
     }
 
@@ -124,5 +136,31 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (SearchView.isSearchOpen()) {
+            SearchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        this.navigateToSearch(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

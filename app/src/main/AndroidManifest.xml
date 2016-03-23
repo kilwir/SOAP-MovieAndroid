@@ -42,6 +42,8 @@
         </activity>
         <activity android:name=".View.Implementation.UserActivity">
         </activity>
+        <activity android:name=".View.Implementation.SearchActivity">
+        </activity>
     </application>
 
 </manifest>

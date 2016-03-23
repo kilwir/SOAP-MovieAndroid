@@ -52,17 +52,15 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
-        ButterKnife.bind(this);
-
-        mPresenter = new PersonPresenterImpl(this);
         init();
+        mPresenter = new PersonPresenterImpl(this);
+        mPresenter.init(getIntent());
     }
 
     @Override
     protected void init() {
         super.init();
         initRecyclerView();
-        mPresenter.init(getIntent());
     }
 
     @Override

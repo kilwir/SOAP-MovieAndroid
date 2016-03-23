@@ -6,31 +6,28 @@
     android:id="@+id/drawer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tmtc.soap.View.Implementation.MainActivity"
+    tools:context="tmtc.soap.View.Implementation.SearchActivity"
     android:theme="@style/SoapTheme">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".SearchActivity">
 
-        <include android:id="@+id/toolbar_include" layout="@layout/toolbar"/>
+        <com.quinny898.library.persistentsearch.SearchBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchbox"
+            />
 
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/search_view"
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/searchbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MaterialSearchViewStyle"/>
+            android:id="@+id/recycler_search">
 
-        <fragment
-            android:layout_below="@id/toolbar_include"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="tmtc.soap.Fragment.FragmentMovies"
-            android:id="@+id/fragment_movies"
-            tools:layout="@layout/fragment_movies">
-        </fragment>
+        </android.support.v7.widget.RecyclerView>
+
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
