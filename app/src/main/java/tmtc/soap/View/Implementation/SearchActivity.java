@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.logger.Logger;
@@ -21,6 +22,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.SearchAdapter;
+import tmtc.soap.Listener.SearchItemClickListener;
 import tmtc.soap.Model.SearchItem;
 import tmtc.soap.Presenter.Implementation.SearchPresenterImpl;
 import tmtc.soap.Presenter.SearchPresenter;
@@ -32,7 +34,7 @@ import tmtc.soap.View.Template.DrawerAppCompatActivity;
  * Bad Boys Team
  * Created by remyjallan on 23/03/2016.
  */
-public class SearchActivity extends DrawerAppCompatActivity implements SearchView, SearchBox.MenuListener, SearchBox.SearchListener {
+public class SearchActivity extends DrawerAppCompatActivity implements SearchView, SearchBox.MenuListener, SearchBox.SearchListener, SearchItemClickListener.ISearchItem {
     @Bind(R.id.searchbox)
     SearchBox SearchInput;
     @Bind(R.id.recycler_search)
@@ -74,8 +76,14 @@ public class SearchActivity extends DrawerAppCompatActivity implements SearchVie
     public void setSearchResult(List<SearchItem> searchResult) {
         if(searchResult != null) {
             SearchAdapter adapter = new SearchAdapter(this,searchResult);
+            adapter.setListener(this);
             RecyclerSearch.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onSearchItemClick(View view, SearchItem item) {
+        Logger.d("Click -> "+item.getIdType());
     }
 
     @Override

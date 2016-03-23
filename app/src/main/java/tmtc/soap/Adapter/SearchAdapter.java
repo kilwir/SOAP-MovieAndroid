@@ -14,6 +14,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.CustomView.TopCropImageView;
+import tmtc.soap.Listener.SearchItemClickListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.Model.SearchItem;
@@ -23,14 +24,19 @@ import tmtc.soap.R;
  * Bad Boys Team
  * Created by remyjallan on 23/03/2016.
  */
-public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements SearchItemClickListener.IPosition{
 
     private Context mContext;
     private List<SearchItem> mSearchItems;
+    private SearchItemClickListener.ISearchItem mListener;
 
     public SearchAdapter(Context context, List<SearchItem> searchItems) {
         mContext = context;
         mSearchItems = searchItems;
+    }
+
+    public void setListener(SearchItemClickListener.ISearchItem listener) {
+        mListener = listener;
     }
 
     @Override
@@ -63,6 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Picasso.with(mContext)
                 .load(person.getPicture())
                 .into(holder.ImagePicture);
+        holder.setListener(this);
     }
 
     private void onBindMovieViewHolder(SearchAdapterMovieViewHolder holder,Movie movie) {
@@ -70,6 +77,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Picasso.with(mContext)
                 .load(movie.getPoster())
                 .into(holder.ImageCover);
+        holder.setListener(this);
     }
 
     @Override
@@ -81,29 +89,65 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemCount() {
         return mSearchItems.size();
     }
+
+    @Override
+    public void onSearchItemClick(View view, int position) {
+        if(mListener != null) {
+            mListener.onSearchItemClick(view, mSearchItems.get(position));
+        }
+    }
 }
 
-class SearchAdapterMovieViewHolder extends RecyclerView.ViewHolder {
+class SearchAdapterMovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
     @Bind(R.id.image_cover)
     TopCropImageView ImageCover;
     @Bind(R.id.text_title)
     TextView TextTitle;
 
+    private SearchItemClickListener.IPosition mListener;
+
     public SearchAdapterMovieViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
+    }
+
+    public void setListener(SearchItemClickListener.IPosition listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(mListener != null) {
+            mListener.onSearchItemClick(view,getAdapterPosition());
+        }
     }
 }
 
-class SearchAdapterPersonViewHolder extends RecyclerView.ViewHolder {
+class SearchAdapterPersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @Bind(R.id.image_picture)
     TopCropImageView ImagePicture;
     @Bind(R.id.text_name)
     TextView TextName;
 
+    private SearchItemClickListener.IPosition mListener;
+
     public SearchAdapterPersonViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(this);
+    }
+
+    public void setListener(SearchItemClickListener.IPosition listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(mListener != null) {
+            mListener.onSearchItemClick(view,getAdapterPosition());
+        }
     }
 }
