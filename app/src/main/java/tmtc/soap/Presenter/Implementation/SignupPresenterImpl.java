@@ -1,7 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
 import tmtc.soap.DataManager.AuthDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.SignupListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.User;
@@ -51,6 +50,6 @@ public class SignupPresenterImpl implements SignupPresenter, SignupListener {
     @Override
     public void onSignupError(ErrorContainer error) {
         mView.hideProgress();
-        mView.showMessage(error.toString());
+        mView.showMessage(error.Message);
     }
 }

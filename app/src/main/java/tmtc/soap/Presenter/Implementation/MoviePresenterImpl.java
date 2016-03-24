@@ -3,13 +3,10 @@ package tmtc.soap.Presenter.Implementation;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.orhanobut.logger.Logger;
-
 import org.parceler.Parcels;
 
 import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.MovieDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;

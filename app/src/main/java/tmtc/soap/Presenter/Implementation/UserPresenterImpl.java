@@ -1,7 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 

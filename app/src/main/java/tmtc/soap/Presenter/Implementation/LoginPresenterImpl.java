@@ -3,7 +3,6 @@ package tmtc.soap.Presenter.Implementation;
 import android.app.Activity;
 
 import tmtc.soap.DataManager.AuthDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.LoginListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.User;
@@ -56,6 +55,6 @@ public class LoginPresenterImpl implements LoginPresenter,LoginListener{
     @Override
     public void onLoginError(ErrorContainer error) {
         mView.hideProgress();
-        mView.showMessage(error.toString());
+        mView.showMessage(error.Message);
     }
 }

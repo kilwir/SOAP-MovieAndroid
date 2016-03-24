@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.DataManager.AuthDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.R;
 import tmtc.soap.View.Implementation.LoginActivity;
 import tmtc.soap.View.Implementation.MainActivity;

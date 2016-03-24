@@ -1,10 +1,8 @@
 package tmtc.soap.Fragment;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import butterknife.ButterKnife;
 import tmtc.soap.Adapter.CommentsAdapter;
 import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.CommentDataManager;
-import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.CommentsListener;
 import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Model.Comment;

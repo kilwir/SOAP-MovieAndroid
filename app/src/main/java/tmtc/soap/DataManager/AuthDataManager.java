@@ -3,9 +3,24 @@ package tmtc.soap.DataManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
+
+import cz.msebera.android.httpclient.Header;
+import tmtc.soap.Helper.ApiHelper;
 import tmtc.soap.Helper.ErrorHelper;
 import tmtc.soap.Listener.LoginListener;
 import tmtc.soap.Listener.SignupListener;
+import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.User;
 
 /**
@@ -19,6 +34,7 @@ public class AuthDataManager {
     private String mToken;
     private User mCurrentUser;
     private Context mContext;
+    private AsyncHttpClient mClient;
 
     private static AuthDataManager ourInstance = new AuthDataManager();
 
@@ -27,11 +43,13 @@ public class AuthDataManager {
     }
 
     private AuthDataManager() {
+        mClient = new AsyncHttpClient();
     }
 
     public void init(Context context) {
         this.mContext = context;
         this.mCurrentUser = this.getUserOnLocal();
+        Logger.init("AuthDataManager");
     }
 
     public boolean isConnected() {
@@ -41,6 +59,15 @@ public class AuthDataManager {
 
         return false;
     }
+
+    /*public String getToken() {
+        if(mToken == null) {
+            if(this.isConnected()) {
+
+            }
+        }
+        return "";
+    }*/
 
     public void login(User user, LoginListener listener) {
         if(mContext == null) {
@@ -52,13 +79,46 @@ public class AuthDataManager {
         listener.onLoginSuccess(user);
     }
 
-    public void signup(User user, SignupListener listener) {
+    public void signup(final User user, final SignupListener listener) {
         if( mContext == null) {
             listener.onSignupError(ErrorHelper.ContextIsEmpty());
             return;
         }
-        saveUserOnLocal(user);
-        listener.onSignupSuccess(user);
+
+        RequestParams params = new RequestParams();
+
+        params.put("username",user.getUsername());
+        params.put("password",user.getPassword());
+        params.put("email",user.getEmail());
+
+        mClient.post(ApiHelper.SIGN_UP, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    try {
+                        if(response.has("error")) {
+                            JSONObject error = response.getJSONObject("error");
+                            listener.onSignupError(new ErrorContainer(error.getInt("code"),error.getString("message")));
+                        } else  {
+                            mToken = response.getString("token");
+                            saveUserOnLocal(user);
+                            listener.onSignupSuccess(user);
+                        }
+
+                    } catch (JSONException e) {
+                        listener.onSignupError(ErrorHelper.ErrorParsingJson());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.onSignupError(ErrorHelper.ErrorParsingJson());
+            }
+        });
+
+        //saveUserOnLocal(user);
+        //listener.onSignupSuccess(user);
     }
 
     public void logout() {

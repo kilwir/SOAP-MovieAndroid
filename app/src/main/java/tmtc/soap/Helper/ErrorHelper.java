@@ -8,6 +8,10 @@ import tmtc.soap.Model.ErrorContainer;
  */
 public class ErrorHelper {
     public static ErrorContainer ContextIsEmpty() {
-        return new ErrorContainer(1,"The context is empty");
+        return new ErrorContainer(691,"Une Erreur à été rencontré au sein de l'application");
+    }
+
+    public static ErrorContainer ErrorParsingJson() {
+        return new ErrorContainer(692,"Une erreur à été rencontré avec le Serveur");
     }
 }

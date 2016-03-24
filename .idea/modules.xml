@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SOAP.iml" filepath="$PROJECT_DIR$/SOAP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simplerest/simplerest.iml" filepath="$PROJECT_DIR$/simplerest/simplerest.iml" />
     </modules>
   </component>
 </project>

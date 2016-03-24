@@ -2,8 +2,6 @@ package tmtc.soap.DataManager;
 
 import android.os.Handler;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
