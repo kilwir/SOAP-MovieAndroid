@@ -12,7 +12,8 @@
         <tmtc.soap.CustomView.TopCropImageView
             android:id="@+id/image_cover"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:transitionName="poster_movie"/>
 
         <TextView
             android:id="@+id/text_title"

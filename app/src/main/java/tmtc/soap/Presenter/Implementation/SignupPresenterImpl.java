@@ -1,5 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.SignupListener;
 import tmtc.soap.Model.ErrorContainer;
@@ -38,7 +39,7 @@ public class SignupPresenterImpl implements SignupPresenter, SignupListener {
         User user = new User(username,password);
         user.setEmail(email);
 
-        UserDataManager.getInstance().signup(user,this);
+        AuthDataManager.getInstance().signup(user,this);
     }
 
     @Override

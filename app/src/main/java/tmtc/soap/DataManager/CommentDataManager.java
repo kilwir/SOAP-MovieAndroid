@@ -41,7 +41,7 @@ public class CommentDataManager {
                     list.add(comment);
                 }
                 if (movie.getId() % 2 == 0)
-                    list.add(new Comment(69, "Super commentaire ma guele", 4, UserDataManager.getInstance().getCurrentUser(),movie));
+                    list.add(new Comment(69, "Super commentaire ma guele", 4, AuthDataManager.getInstance().getCurrentUser(),movie));
                 listener.OnCommentsSuccess(list);
             }
         }, 200);

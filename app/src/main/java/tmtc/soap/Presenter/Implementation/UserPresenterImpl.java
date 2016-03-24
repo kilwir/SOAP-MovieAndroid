@@ -9,6 +9,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.CommentDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.CommentsListener;
@@ -57,7 +58,7 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     @Override
     public void checkStateFriend() {
-        if(mUser.equals(UserDataManager.getInstance().getCurrentUser())) {
+        if(mUser.equals(AuthDataManager.getInstance().getCurrentUser())) {
             mView.hideFab();
         } else {
             UserDataManager.getInstance().isMyFriend(mUser,this);

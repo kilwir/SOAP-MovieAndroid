@@ -27,6 +27,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.CommentsAdapter;
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.CommentDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.CommentsListener;
@@ -123,7 +124,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         this.mComments = comments;
         for (Comment comment :
                 mComments) {
-            if(comment.getUser() == UserDataManager.getInstance().getCurrentUser()) {
+            if(comment.getUser() == AuthDataManager.getInstance().getCurrentUser()) {
                 mPersonalComment = comment;
             }
         }
@@ -167,7 +168,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
 
         if(inputComment.getText().length() > 3) {
             if(mPersonalComment == null)
-                mPersonalComment = new Comment(-1,inputComment.getText().toString(),rating.getRating(), UserDataManager.getInstance().getCurrentUser(),mMovie);
+                mPersonalComment = new Comment(-1,inputComment.getText().toString(),rating.getRating(), AuthDataManager.getInstance().getCurrentUser(),mMovie);
             else {
                 mPersonalComment.setContent(inputComment.getText().toString());
                 mPersonalComment.setRating(rating.getRating());

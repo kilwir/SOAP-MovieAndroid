@@ -2,6 +2,7 @@ package tmtc.soap.Presenter.Implementation;
 
 import android.app.Activity;
 
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.LoginListener;
 import tmtc.soap.Model.ErrorContainer;
@@ -19,7 +20,7 @@ public class LoginPresenterImpl implements LoginPresenter,LoginListener{
 
     public LoginPresenterImpl(LoginView view) {
         this.mView = view;
-        UserDataManager.getInstance().init((Activity)mView);
+        AuthDataManager.getInstance().init((Activity)mView);
     }
 
     @Override
@@ -36,12 +37,12 @@ public class LoginPresenterImpl implements LoginPresenter,LoginListener{
 
         User user = new User(username,password);
 
-        UserDataManager.getInstance().login(user,this);
+        AuthDataManager.getInstance().login(user,this);
     }
 
     @Override
     public void checkIsConnected() {
-        if(UserDataManager.getInstance().isConnected()) {
+        if(AuthDataManager.getInstance().isConnected()) {
             mView.navigateToMain();
         }
     }

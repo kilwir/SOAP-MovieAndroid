@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.R;
 import tmtc.soap.View.Implementation.LoginActivity;
@@ -24,6 +25,7 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
     public NavigationView mNavigationDrawer;
 
     protected void init() {
+        AuthDataManager.getInstance().init(this);
         ButterKnife.bind(this);
         initNavigationView();
     }
@@ -58,18 +60,20 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
     protected void actionNavigationItemSelected(int id) {
         switch (id) {
             case R.id.logout:
-                UserDataManager.getInstance().logout();
+                AuthDataManager.getInstance().logout();
                 Intent intentLogin = new Intent(this, LoginActivity.class);
                 intentLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentLogin.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intentLogin);
                 finish();
+                break;
             case R.id.last_exit:
                 Intent intentMain = new Intent(this, MainActivity.class);
                 intentMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intentMain);
                 finish();
+                break;
         }
     }
 }

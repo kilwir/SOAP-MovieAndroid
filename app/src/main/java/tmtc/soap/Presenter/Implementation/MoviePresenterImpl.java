@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 
 import org.parceler.Parcels;
 
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.MovieDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MovieListener;
@@ -37,7 +38,7 @@ public class MoviePresenterImpl implements MoviePresenter, MovieListener<Movie> 
     public void init(Intent intent) {
         mMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
         if(mMovie == null) {
-            if(!UserDataManager.getInstance().isConnected()) {
+            if(!AuthDataManager.getInstance().isConnected()) {
                 mView.navigateToLogin();
                 return;
             }

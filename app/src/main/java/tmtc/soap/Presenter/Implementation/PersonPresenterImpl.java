@@ -7,6 +7,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.MovieDataManager;
 import tmtc.soap.DataManager.UserDataManager;
 import tmtc.soap.Listener.MovieListener;
@@ -36,7 +37,7 @@ public class PersonPresenterImpl implements PersonPresenter, MovieListener<List<
         if(intent != null) {
             mPerson = Parcels.unwrap(intent.getParcelableExtra("person"));
             if(mPerson == null) {
-                if(!UserDataManager.getInstance().isConnected()) {
+                if(!AuthDataManager.getInstance().isConnected()) {
                     mView.navigateToLogin();
                     return;
                 }

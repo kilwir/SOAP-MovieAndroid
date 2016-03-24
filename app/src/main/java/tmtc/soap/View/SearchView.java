@@ -1,7 +1,11 @@
 package tmtc.soap.View;
 
+import android.view.View;
+
 import java.util.List;
 
+import tmtc.soap.Model.Movie;
+import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.Model.SearchItem;
 
 /**
@@ -10,4 +14,6 @@ import tmtc.soap.Model.SearchItem;
  */
 public interface SearchView extends BaseView {
     void setSearchResult(List<SearchItem> searchResult);
+    void navigateToMovie(View view, Movie movie);
+    void navigateToPerson(View view, MoviePerson person);
 }
