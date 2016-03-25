@@ -1,5 +1,7 @@
 package tmtc.soap.Model;
 
+import android.content.Intent;
+
 import org.parceler.Parcel;
 
 /**
@@ -8,6 +10,7 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class User {
+    private Integer mId;
     private String mUsername;
     private String mPassword;
     private String mEmail;
@@ -23,6 +26,14 @@ public class User {
     public User(String username, String password) {
         mUsername = username;
         mPassword = password;
+    }
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
     }
 
     public String getUsername() {

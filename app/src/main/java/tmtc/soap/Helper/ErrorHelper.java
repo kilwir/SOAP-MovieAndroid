@@ -14,4 +14,8 @@ public class ErrorHelper {
     public static ErrorContainer ErrorParsingJson() {
         return new ErrorContainer(692,"Une erreur à été rencontré avec le Serveur");
     }
+
+    public static ErrorContainer WrongCredentials() {
+        return new ErrorContainer(693,"Vos identifiants sont incorrects");
+    }
 }

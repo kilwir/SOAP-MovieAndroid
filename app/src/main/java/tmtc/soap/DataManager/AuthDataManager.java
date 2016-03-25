@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
@@ -60,23 +61,50 @@ public class AuthDataManager {
         return false;
     }
 
-    /*public String getToken() {
-        if(mToken == null) {
-            if(this.isConnected()) {
+    public String getToken() {
+        return mToken;
+    }
 
-            }
-        }
-        return "";
-    }*/
-
-    public void login(User user, LoginListener listener) {
+    public void login(final User user, final LoginListener listener) {
         if(mContext == null) {
             listener.onLoginError(ErrorHelper.ContextIsEmpty());
             return;
         }
-        user.setEmail("injectEmail@email.fr");
-        saveUserOnLocal(user);
-        listener.onLoginSuccess(user);
+
+        Logger.d(ApiHelper.login(user.getUsername(),user.getPassword()));
+
+        mClient.get(ApiHelper.login(user.getUsername(),user.getPassword()),new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    try {
+                        if(response.has("error")) {
+                            JSONObject error = response.getJSONObject("error");
+                            listener.onLoginError(new ErrorContainer(error.getInt("code"), error.getString("message")));
+                        } else  {
+                            mToken = response.getString("token");
+                            JSONObject userJson = response.getJSONObject("user");
+                            user.setEmail(userJson.getString("email"));
+                            user.setId(userJson.getInt("id"));
+                            saveUserOnLocal(user);
+                            listener.onLoginSuccess(user);
+                        }
+
+                    } catch (JSONException e) {
+                        listener.onLoginError(ErrorHelper.ErrorParsingJson());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if(statusCode == 401) {
+                    listener.onLoginError(ErrorHelper.WrongCredentials());
+                } else {
+                    listener.onLoginError(ErrorHelper.ErrorParsingJson());
+                }
+            }
+        });
     }
 
     public void signup(final User user, final SignupListener listener) {
