@@ -17,7 +17,7 @@ import tmtc.soap.View.MovieView;
  * Bad Boys Team
  * Created by remyjallan on 10/03/2016.
  */
-public class MoviePresenterImpl implements MoviePresenter, MovieListener<Movie> {
+public class MoviePresenterImpl implements MoviePresenter {
     private MovieView mView;
 
     private Movie mMovie;
@@ -32,6 +32,15 @@ public class MoviePresenterImpl implements MoviePresenter, MovieListener<Movie> 
     }
 
     @Override
+    public void boughtMovie(boolean bought) {
+        if(!bought) { //Location
+            mView.navigateToBought(mMovie);
+        } else { //Visionage
+            mView.navigateToPlayer(mMovie);
+        }
+    }
+
+    @Override
     public void init(Intent intent) {
         mMovie = Parcels.unwrap(intent.getParcelableExtra("movie"));
         if(mMovie == null) {
@@ -43,26 +52,27 @@ public class MoviePresenterImpl implements MoviePresenter, MovieListener<Movie> 
             Uri data = intent.getData();
             String id = data.getQueryParameter("id");
             if(id != null) {
-                MovieDataManager.getInstance().getMovieById(Integer.valueOf(id),this);
+
+                MovieDataManager.getInstance().getMovieById(Integer.valueOf(id), new MovieListener<Movie>() {
+                    @Override
+                    public void OnMovieSuccess(Movie movie) {
+                        mMovie = movie;
+                        mView.hideProgress();
+                        mView.init(movie);
+                    }
+
+                    @Override
+                    public void OnMovieError(ErrorContainer error) {
+                        mView.hideProgress();
+                        mView.showMessage(error.Message);
+                        mView.navigateToMain();
+                    }
+                });
             } else {
                 mView.navigateToMain();
             }
         } else {
             mView.init(mMovie);
         }
-    }
-
-    @Override
-    public void OnMovieSuccess(Movie movie) {
-        this.mMovie = movie;
-        mView.hideProgress();
-        mView.init(movie);
-    }
-
-    @Override
-    public void OnMovieError(ErrorContainer error) {
-        mView.hideProgress();
-        mView.showMessage(error.Message);
-        mView.navigateToMain();
     }
 }

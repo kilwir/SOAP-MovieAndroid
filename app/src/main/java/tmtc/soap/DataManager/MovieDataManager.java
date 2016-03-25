@@ -2,6 +2,12 @@ package tmtc.soap.DataManager;
 
 import android.os.Handler;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,16 +15,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+import tmtc.soap.Helper.ApiHelper;
+import tmtc.soap.Helper.ErrorHelper;
 import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Listener.PersonListener;
+import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
+import tmtc.soap.Model.User;
 
 /**
  * Bad Boys Team
  * Created by remyjallan on 09/03/2016.
  */
-public class MovieDataManager {
+public class MovieDataManager extends DataManager{
     private static MovieDataManager ourInstance = new MovieDataManager();
 
     public static MovieDataManager getInstance() {
@@ -48,7 +59,7 @@ public class MovieDataManager {
                         movie.setPoster("http://fr.web.img6.acsta.net/pictures/16/01/26/13/56/487595.jpg");
 
                     for (int j = 0; j < 8; j++) {
-                        MoviePerson person = new MoviePerson(j, "Rémy Jallan", "Acteur");
+                        MoviePerson person = new MoviePerson(j, "Rémy Jallan", "Acteur" );
                         person.setPicture("http://media4.popsugar-assets.com/files/2012/12/51/4/192/1922398/49a4cec24601ed4e_ryanreynolds.xxxlarge_2.jpg");
                         movie.addPerson(person);
                     }
@@ -98,5 +109,34 @@ public class MovieDataManager {
                 listener.onPersonSuccess(person);
             }
         }, 1000);
+    }
+
+    public void boughtMovie(Movie movie, User user,final MovieListener<Boolean> listener) {
+        RequestParams params = new RequestParams();
+
+        getClient().get(ApiHelper.bought(user.getId(),movie.getId()),params,new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    try {
+                        Boolean bought = response.getBoolean("bought");
+                        listener.OnMovieSuccess(bought);
+
+                    } catch (JSONException e) {
+                        listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 }

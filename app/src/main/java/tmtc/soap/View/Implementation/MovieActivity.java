@@ -21,6 +21,7 @@ import tmtc.soap.Adapter.MovieContentPagerAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
 import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Listener.ItemPersonListener;
+import tmtc.soap.Listener.OnClickBoughtListener;
 import tmtc.soap.Model.Comment;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
@@ -36,7 +37,7 @@ import tmtc.soap.View.Template.DrawerAppCompatActivity;
  * Created by remyjallan on 10/03/2016.
  */
 
-public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson, ItemCommentListener.IComment {
+public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson, ItemCommentListener.IComment, OnClickBoughtListener {
 
     private MoviePresenter mPresenter;
     private FragmentPagerAdapter mPagerAdapter;
@@ -51,7 +52,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     public TitlePageIndicator PageIndicatorContent;
 
     private void initViewPager(Movie movie) {
-        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this,this);
+        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this,this,this);
         ViewPagerContent.setAdapter(mPagerAdapter);
         PageIndicatorContent.setViewPager(ViewPagerContent);
     }
@@ -108,9 +109,19 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
         transitionTo(intent);
     }
 
+    @Override
+    public void navigateToBought(Movie movie) {
+        Logger.d("Navigate to bought");
+    }
+
+    @Override
+    public void navigateToPlayer(Movie movie) {
+        Logger.d("Navigate to Player");
+    }
+
     @OnClick(R.id.fab_share)
     public void shareMovie() {
-        this.shareText("Super film sur tmtc://movie?id="+mPresenter.getMovie().getId());
+        this.shareText("Super film tmtc://movie?id="+mPresenter.getMovie().getId());
     }
 
     @Override
@@ -118,5 +129,10 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
         if(comment != null && comment.getUser() != null) {
             this.navigateToUser(comment.getUser());
         }
+    }
+
+    @Override
+    public void OnClick(View view, boolean bought) {
+        mPresenter.boughtMovie(bought);
     }
 }

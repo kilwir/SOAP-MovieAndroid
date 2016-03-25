@@ -11,4 +11,5 @@ import tmtc.soap.Model.Movie;
 public interface MoviePresenter {
     void init(Intent intent);
     Movie getMovie();
+    void boughtMovie(boolean bought);
 }

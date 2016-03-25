@@ -16,4 +16,6 @@ public interface MovieView extends BaseView {
     void navigateToPerson(View view,MoviePerson person);
     void navigateToLogin();
     void navigateToUser(User user);
+    void navigateToBought(Movie movie);
+    void navigateToPlayer(Movie movie);
 }

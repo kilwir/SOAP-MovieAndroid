@@ -4,12 +4,14 @@ package tmtc.soap.Adapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.view.View;
 
 import tmtc.soap.Fragment.FragmentComments;
 import tmtc.soap.Fragment.FragmentMovieInformation;
 import tmtc.soap.Fragment.FragmentMoviePersons;
 import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Listener.ItemPersonListener;
+import tmtc.soap.Listener.OnClickBoughtListener;
 import tmtc.soap.Model.Movie;
 
 /**
@@ -20,16 +22,18 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
     private Movie mMovie;
     private ItemPersonListener.IPerson mListenerPerson;
     private ItemCommentListener.IComment mListenerComment;
+    private OnClickBoughtListener mListenerRent;
 
     public MovieContentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public MovieContentPagerAdapter(FragmentManager fm, Movie movie,ItemPersonListener.IPerson listenerPerson,ItemCommentListener.IComment listenerComment) {
+    public MovieContentPagerAdapter(FragmentManager fm, Movie movie,ItemPersonListener.IPerson listenerPerson,ItemCommentListener.IComment listenerComment,OnClickBoughtListener listenerRent) {
         super(fm);
         this.mMovie = movie;
         this.mListenerPerson = listenerPerson;
         this.mListenerComment = listenerComment;
+        this.mListenerRent = listenerRent;
     }
 
     public void setItemPersonListener(ItemPersonListener.IPerson listener) {
@@ -46,6 +50,7 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
             case 0 :
                 FragmentMovieInformation fragmentInformation = new FragmentMovieInformation();
                 fragmentInformation.setMovie(mMovie);
+                fragmentInformation.setClickListener(mListenerRent);
                 return fragmentInformation;
             case 1 :
                 FragmentMoviePersons fragmentPersons = new FragmentMoviePersons();
