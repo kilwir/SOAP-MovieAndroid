@@ -21,6 +21,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,7 +60,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         Logger.init("Comments Fragment");
         this.initRecyclerView();
         if(mMovie != null) {
-            this.loadComments();
+            this.loadComments(false);
         }
         return view;
     }
@@ -94,8 +95,8 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         mMovie = movie;
     }
 
-    private void loadComments() {
-        if(mComments == null) {
+    private void loadComments(boolean reload) {
+        if(mComments == null || reload) {
             showProgress();
             CommentDataManager.getInstance().getMovieComment(mMovie, this);
         } else {
@@ -121,7 +122,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         this.mComments = comments;
         for (Comment comment :
                 mComments) {
-            if(comment.getUser() == AuthDataManager.getInstance().getCurrentUser()) {
+            if(Objects.equals(comment.getUser().getId(), AuthDataManager.getInstance().getCurrentUser().getId())) {
                 mPersonalComment = comment;
             }
         }
@@ -170,9 +171,19 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
                 mPersonalComment.setContent(inputComment.getText().toString());
                 mPersonalComment.setRating(rating.getRating());
             }
-            CommentDataManager.getInstance().saveComment(mMovie,mPersonalComment);
-            Toast.makeText(getActivity(), "Votre commentaire a bien été enregistré", Toast.LENGTH_LONG).show();
-            this.loadComments();
+            mPersonalComment.setMovie(mMovie);
+            CommentDataManager.getInstance().saveComment(mPersonalComment, new CommentsListener<Boolean>() {
+                @Override
+                public void OnCommentsSuccess(Boolean comments) {
+                    Toast.makeText(getActivity(), "Votre commentaire a bien été enregistré", Toast.LENGTH_LONG).show();
+                    loadComments(true);
+                }
+
+                @Override
+                public void OnCommentsError(ErrorContainer error) {
+                    Toast.makeText(getActivity(),error.Message,Toast.LENGTH_LONG).show();
+                }
+            });
         } else {
             Toast.makeText(getActivity(),"Votre commentaire est trop court",Toast.LENGTH_LONG).show();
         }

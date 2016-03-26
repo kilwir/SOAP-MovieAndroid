@@ -49,16 +49,15 @@ public class FragmentMovieInformation extends Fragment {
                 @Override
                 public void OnMovieSuccess(Boolean movie) {
                     mBought = movie;
-                    ButtonRent.setVisibility(View.VISIBLE);
+                    /*ButtonRent.setVisibility(View.VISIBLE);
                     if (movie) {
                         ButtonRent.setText("Regarder le film");
-                    }
+                    }*/
                 }
 
                 @Override
                 public void OnMovieError(ErrorContainer error) {
-                    ButtonRent.setVisibility(View.INVISIBLE);
-
+                    //ButtonRent.setVisibility(View.INVISIBLE);
                 }
             });
         }

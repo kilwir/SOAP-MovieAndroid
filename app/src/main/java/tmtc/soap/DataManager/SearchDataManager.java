@@ -2,9 +2,20 @@ package tmtc.soap.DataManager;
 
 import android.os.Handler;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
+import tmtc.soap.Helper.ApiHelper;
+import tmtc.soap.Helper.ErrorHelper;
+import tmtc.soap.Helper.JSONHelper;
 import tmtc.soap.Listener.SearchListener;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
@@ -14,7 +25,7 @@ import tmtc.soap.Model.SearchItem;
  * Bad Boys Team
  * Created by remyjallan on 23/03/2016.
  */
-public class SearchDataManager {
+public class SearchDataManager extends DataManager{
     private static SearchDataManager ourInstance = new SearchDataManager();
 
     public static SearchDataManager getInstance() {
@@ -25,29 +36,42 @@ public class SearchDataManager {
     }
 
     public void search(String query, final SearchListener<List<SearchItem>> listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().get(ApiHelper.getSearch(query),new JsonHttpResponseHandler(){
+
             @Override
-            public void run() {
-                List<SearchItem> list = new ArrayList<>();
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    List<SearchItem> list = new ArrayList<>();
+                    try {
+                        if(response.has("movie")) {
+                            JSONArray movies = response.getJSONArray("movie");
+                            for(int i = 0; i< movies.length(); i++) {
+                                list.add(JSONHelper.JSONToMovie(movies.getJSONObject(i)));
+                            }
+                        }
+                        if(response.has("person")) {
+                            JSONArray persons = response.getJSONArray("person");
+                            for(int i = 0; i< persons.length(); i++) {
+                                list.add(JSONHelper.JSONToPerson(persons.getJSONObject(i)));
+                            }
+                        }
 
-                Movie movie = new Movie(169,"Borat");
-                movie.setSynopsis("Borat, reporter kazakh, est envoyé aux Etats-Unis par la télévision de son pays pour y tourner un reportage sur le mode de vie de cette nation vénérée comme un modèle. Au cours de son périple, il rencontre de vraies personnes dans des situations authentiques, avec les conséquences les plus incroyables. Son comportement à contre-courant provoque les réactions les plus diverses, et révèle les préjugés et les dessous de la société américaine. Aucun sujet n'échappera à sa soif d'apprendre, même les plus extrêmes. Un vrai choc des cultures...");
-                movie.setReleaseDate("15/11/2006");
-                movie.setPoster("http://fr.web.img6.acsta.net/r_1280_720/medias/nmedia/18/36/29/57/18682308.jpg");
-                for (int i = 0; i < 4; i++) {
-                    movie.addPerson(new MoviePerson(134,"Sacha Barons Cohen","Acteur","http://fr.web.img5.acsta.net/r_1280_720/medias/nmedia/18/36/29/57/18682097.jpg"));
+                        listener.OnSearchSuccess(list);
+                    } catch (JSONException e) {
+                        listener.OnSearchError(ErrorHelper.ErrorParsingJson());
+                    }
                 }
-
-                MoviePerson person= new MoviePerson(135,"Pamela Anderson","Acteur","http://fr.web.img1.acsta.net/r_640_600/b_1_d6d6d6/medias/nmedia/18/66/09/25/18910251.jpg");
-
-                list.add(movie);
-                list.add(person);
-                list.add(movie);
-                list.add(person);
-
-                listener.OnSearchSuccess(list);
             }
-        },500);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnSearchError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnSearchError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -18,7 +19,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tmtc.soap.Adapter.MoviePersonAdapter;
+import tmtc.soap.DataManager.MovieDataManager;
 import tmtc.soap.Listener.ItemPersonListener;
+import tmtc.soap.Listener.MovieListener;
+import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.R;
@@ -27,7 +31,7 @@ import tmtc.soap.R;
  * Bad Boys Team
  * Created by remyjallan on 10/03/2016.
  */
-public class FragmentMoviePersons extends Fragment implements ItemPersonListener.IPosition{
+public class FragmentMoviePersons extends Fragment implements ItemPersonListener.IPosition, MovieListener<Movie> {
     private Movie mMovie;
     private ItemPersonListener.IPerson mListener;
 
@@ -52,6 +56,17 @@ public class FragmentMoviePersons extends Fragment implements ItemPersonListener
     }
 
     public void loadContent() {
+        if(mMovie != null){
+           if(mMovie.getPersons() != null && mMovie.getPersons().size() > 0) {
+               setContent();
+           } else {
+               MovieDataManager.getInstance().getMovieById(mMovie.getId(),this);
+           }
+        }
+
+    }
+
+    private void setContent() {
         if(RecyclerMoviePersons != null && mMovie != null) {
             MoviePersonAdapter adapter = new MoviePersonAdapter(getActivity(),mMovie.getPersons());
             adapter.setItemPersonListener(this);
@@ -78,5 +93,16 @@ public class FragmentMoviePersons extends Fragment implements ItemPersonListener
         if(mListener != null) {
             mListener.ItemPersonListenerOnClick(view,mMovie.getPersons().get(position));
         }
+    }
+
+    @Override
+    public void OnMovieSuccess(Movie movie) {
+        mMovie = movie;
+        setContent();
+    }
+
+    @Override
+    public void OnMovieError(ErrorContainer error) {
+        Toast.makeText(getActivity(),error.Message,Toast.LENGTH_LONG).show();
     }
 }

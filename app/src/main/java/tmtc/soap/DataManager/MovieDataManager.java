@@ -4,7 +4,9 @@ import android.os.Handler;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.logger.Logger;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ import java.util.Locale;
 import cz.msebera.android.httpclient.Header;
 import tmtc.soap.Helper.ApiHelper;
 import tmtc.soap.Helper.ErrorHelper;
+import tmtc.soap.Helper.JSONHelper;
 import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Listener.PersonListener;
 import tmtc.soap.Model.ErrorContainer;
@@ -40,63 +43,105 @@ public class MovieDataManager extends DataManager{
     }
 
     public void getLastMovies(final MovieListener<List<Movie>> listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().get(ApiHelper.lastMovie(25), new JsonHttpResponseHandler() {
             @Override
-            public void run() {
-                List<Movie> movies = new ArrayList<>();
-
-                DateFormat outputFormatter1 = new SimpleDateFormat("dd MMM yyyy", Locale.FRANCE);
-                String output = outputFormatter1.format(new Date());
-
-                for (int i = 0; i < 10; i++) {
-                    Movie movie = new Movie(i, "Deadpool");
-                    movie.setReleaseDate(output);
-                    movie.setSynopsis("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie, tortor vitae luctus ullamcorper, ipsum ante laoreet dui, a congue ante libero quis orci. Ut convallis lectus felis, nec rutrum sapien viverra vitae. Suspendisse nec rutrum dui, ac venenatis lectus. Mauris semper lorem eu efficitur finibus. Vestibulum scelerisque posuere facilisis. Nullam commodo, est ac interdum sodales, quam ipsum viverra justo, at dapibus magna massa sed diam. Phasellus a pulvinar dolor. Nunc lacus erat, rutrum sed hendrerit convallis, sollicitudin et lacus. Aliquam euismod nisl at sollicitudin ultrices. Donec at purus sed justo accumsan ultricies.");
-                    if (i % 2 == 0)
-                        movie.setPoster("http://fr.web.img4.acsta.net/pictures/16/01/19/16/49/249124.jpg");
-                    else
-                        movie.setPoster("http://fr.web.img6.acsta.net/pictures/16/01/26/13/56/487595.jpg");
-
-                    for (int j = 0; j < 8; j++) {
-                        MoviePerson person = new MoviePerson(j, "Rémy Jallan", "Acteur" );
-                        person.setPicture("http://media4.popsugar-assets.com/files/2012/12/51/4/192/1922398/49a4cec24601ed4e_ryanreynolds.xxxlarge_2.jpg");
-                        movie.addPerson(person);
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                if (statusCode == 200) {
+                    List<Movie> movies = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject movieJson = response.getJSONObject(i);
+                            Movie movie = JSONHelper.JSONToMovie(movieJson);
+                            JSONArray persons = movieJson.getJSONArray("persons");
+                            for (int j = 0; j < persons.length(); j++) {
+                                JSONObject personJson = persons.getJSONObject(j);
+                                MoviePerson person = JSONHelper.JSONToPerson(personJson);
+                                movie.addPerson(person);
+                            }
+                            movies.add(movie);
+                        } catch (JSONException e) {
+                            listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+                            return;
+                        }
                     }
-                    movies.add(movie);
+                    listener.OnMovieSuccess(movies);
                 }
-                listener.OnMovieSuccess(movies);
             }
-        }, 1000);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+        });
+
     }
 
     public void getMovieById(final int id, final MovieListener<Movie> listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().get(ApiHelper.getMovie(id),new JsonHttpResponseHandler() {
             @Override
-            public void run() {
-                Movie movie = new Movie(id, "Deadpool 2");
-                DateFormat outputFormatter1 = new SimpleDateFormat("dd MMM yyyy", Locale.FRANCE);
-                String output = outputFormatter1.format(new Date());
-                movie.setSynopsis("Super synopsis ma guele");
-                movie.setPoster("http://fr.web.img3.acsta.net/pictures/15/11/10/09/30/165611.jpg");
-                movie.setReleaseDate(output);
-
-                for (int j = 0; j < 8; j++) {
-                    MoviePerson person = new MoviePerson(j, "Rémy Jallan", "Acteur");
-                    person.setPicture("http://media4.popsugar-assets.com/files/2012/12/51/4/192/1922398/49a4cec24601ed4e_ryanreynolds.xxxlarge_2.jpg");
-                    movie.addPerson(person);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (statusCode == 200) {
+                    try {
+                        Movie movie = JSONHelper.JSONToMovie(response);
+                        if(response.has("persons")) {
+                            JSONArray persons = response.getJSONArray("persons");
+                            for(int i = 0; i < persons.length(); i++) {
+                                movie.addPerson(JSONHelper.JSONToPerson((JSONObject) persons.get(i)));
+                            }
+                        }
+                        listener.OnMovieSuccess(movie);
+                    } catch (JSONException e) {
+                        listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+                    }
                 }
-
-                listener.OnMovieSuccess(movie);
             }
-        }, 1000);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 
-    public void getMovieForPerson(MoviePerson person,MovieListener<List<Movie>> listener) {
-        this.getLastMovies(listener);
+    public void getMovieForPerson(MoviePerson person,final MovieListener<List<Movie>> listener) {
+        getClient().get(ApiHelper.getPerson(person.getId()),new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                List<Movie> list = new ArrayList<Movie>();
+                try {
+                    JSONArray moviesArray = response.getJSONArray("movies");
+                    for(int i = 0;i < moviesArray.length(); i++) {
+                        list.add(JSONHelper.JSONToMovie(moviesArray.getJSONObject(i)));
+                    }
+                } catch (JSONException e) {
+                    listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+                }
+                listener.OnMovieSuccess(list);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 
+    //TODO : à faire
     public void getPersonById(int id, final PersonListener listener) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

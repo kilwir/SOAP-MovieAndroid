@@ -13,7 +13,7 @@ import tmtc.soap.Model.Movie;
  * Created by remyjallan on 24/03/2016.
  */
 public class ApiHelper {
-    public static String BASE = "http://10.31.2.89:3000/";
+    public static String BASE = "http://192.168.1.12:3000/";
 
     public static String AUTH = ApiHelper.BASE + "auth/";
 
@@ -21,9 +21,27 @@ public class ApiHelper {
 
     public static String MOVIE = ApiHelper.BASE + "movies/";
 
+    public static String COMMENT = ApiHelper.BASE + "comments/";
+
+    public static String PERSON = ApiHelper.BASE + "persons/";
+
+    public static String SEARCH = ApiHelper.BASE + "search/";
+
     protected static String LOGIN = ApiHelper.AUTH + "{username}/{password}";
 
     protected static String BOUGHT = ApiHelper.MOVIE + "bought?idUser={idUser}&idMovie={idMovie}";
+
+    protected static String LAST_MOVIE = ApiHelper.MOVIE + "last?count={count}";
+
+    protected static String COMMENT_MOVIE = ApiHelper.COMMENT+"movie?id={idMovie}";
+
+    protected static String PERSON_GET = ApiHelper.PERSON + "{idPerson}";
+
+    protected static String COMMENT_PUT = ApiHelper.COMMENT + "{idComment}";
+
+    protected static String GET_MOVIE = ApiHelper.MOVIE + "{idMovie}";
+
+    protected static String SEARCH_GET = ApiHelper.SEARCH + "{query}";
 
     public static String login(String username,String password) {
         HashMap<String,String> params = new HashMap<>();
@@ -39,6 +57,48 @@ public class ApiHelper {
         params.put("idMovie",String.valueOf(idMovie));
 
         return ApiHelper.getUrl(ApiHelper.BOUGHT, params);
+    }
+
+    public static String lastMovie(int count) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("count",String.valueOf(count));
+
+        return ApiHelper.getUrl(ApiHelper.LAST_MOVIE, params);
+    }
+
+    public static String commentMovie(int idMovie) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idMovie",String.valueOf(idMovie));
+
+        return ApiHelper.getUrl(ApiHelper.COMMENT_MOVIE, params);
+    }
+
+    public static String getPerson(int idPerson) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idPerson",String.valueOf(idPerson));
+
+        return ApiHelper.getUrl(ApiHelper.PERSON_GET, params);
+    }
+
+    public static String putComment(int idComment) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idComment",String.valueOf(idComment));
+
+        return ApiHelper.getUrl(ApiHelper.COMMENT_PUT, params);
+    }
+
+    public static String getMovie(int idMovie) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idMovie",String.valueOf(idMovie));
+
+        return ApiHelper.getUrl(ApiHelper.GET_MOVIE, params);
+    }
+
+    public static String getSearch(String query) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("query",query);
+
+        return ApiHelper.getUrl(ApiHelper.SEARCH_GET,params);
     }
 
     protected static String getUrl(String url,HashMap<String,String> params) {
