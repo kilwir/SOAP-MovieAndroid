@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
+import tmtc.soap.Model.User;
 
 /**
  * Bad Boys Team
@@ -73,5 +74,21 @@ public class JSONHelper {
         }
 
         return person;
+    }
+
+    public static User JSONToUser(JSONObject json) throws JSONException {
+        User user = null;
+
+        if(json != null && json.has("username") && json.has("password")) {
+            user = new User(json.getString("username"),json.getString("password"));
+            if(json.has("id")) {
+                user.setId(json.getInt("id"));
+            }
+            if(json.has("email")) {
+                user.setEmail(json.getString("email"));
+            }
+        }
+
+        return user;
     }
 }

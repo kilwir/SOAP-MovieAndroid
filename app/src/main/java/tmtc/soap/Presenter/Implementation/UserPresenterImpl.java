@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 import org.parceler.Parcels;
 
 import java.util.List;
+import java.util.Objects;
 
 import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.DataManager.CommentDataManager;
@@ -57,7 +58,7 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     @Override
     public void checkStateFriend() {
-        if(mUser.equals(AuthDataManager.getInstance().getCurrentUser())) {
+        if(Objects.equals(mUser.getId(), AuthDataManager.getInstance().getCurrentUser().getId())) {
             mView.hideFab();
         } else {
             UserDataManager.getInstance().isMyFriend(mUser,this);

@@ -27,13 +27,15 @@ public class ApiHelper {
 
     public static String SEARCH = ApiHelper.BASE + "search/";
 
+    public static String FRIENDSHIP = ApiHelper.BASE + "friendship/";
+
     protected static String LOGIN = ApiHelper.AUTH + "{username}/{password}";
 
     protected static String BOUGHT = ApiHelper.MOVIE + "bought?idUser={idUser}&idMovie={idMovie}";
 
     protected static String LAST_MOVIE = ApiHelper.MOVIE + "last?count={count}";
 
-    protected static String COMMENT_MOVIE = ApiHelper.COMMENT+"movie?id={idMovie}";
+    protected static String COMMENT_MOVIE = ApiHelper.COMMENT+"movie/{idMovie}";
 
     protected static String PERSON_GET = ApiHelper.PERSON + "{idPerson}";
 
@@ -42,6 +44,10 @@ public class ApiHelper {
     protected static String GET_MOVIE = ApiHelper.MOVIE + "{idMovie}";
 
     protected static String SEARCH_GET = ApiHelper.SEARCH + "{query}";
+
+    protected static String COMMENT_USER = ApiHelper.COMMENT + "user/{idUser}";
+
+    protected static String IS_MY_FRIEND = ApiHelper.FRIENDSHIP + "{idUser2}";
 
     public static String login(String username,String password) {
         HashMap<String,String> params = new HashMap<>();
@@ -99,6 +105,20 @@ public class ApiHelper {
         params.put("query",query);
 
         return ApiHelper.getUrl(ApiHelper.SEARCH_GET,params);
+    }
+
+    public static String commentUser(int idUser) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idUser",String.valueOf(idUser));
+
+        return ApiHelper.getUrl(ApiHelper.COMMENT_USER, params);
+    }
+
+    public static String isMyFriend(int idUser) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idUser",String.valueOf(idUser));
+
+        return ApiHelper.getUrl(ApiHelper.IS_MY_FRIEND, params);
     }
 
     protected static String getUrl(String url,HashMap<String,String> params) {
