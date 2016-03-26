@@ -94,6 +94,8 @@ public class CommentDataManager extends DataManager{
                         }
                     }
                     listener.OnCommentsSuccess(list);
+                } else {
+                    listener.OnCommentsError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -128,6 +130,8 @@ public class CommentDataManager extends DataManager{
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if(statusCode == 200) {
                     listener.OnCommentsSuccess(true);
+                } else {
+                    listener.OnCommentsError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -152,6 +156,8 @@ public class CommentDataManager extends DataManager{
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if(statusCode == 200) {
                     listener.OnCommentsSuccess(true);
+                } else {
+                    listener.OnCommentsError(ErrorHelper.WrongStatusCode());
                 }
             }
 

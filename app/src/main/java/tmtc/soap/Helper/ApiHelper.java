@@ -51,6 +51,8 @@ public class ApiHelper {
 
     protected static String POST_FRIEND = ApiHelper.FRIENDSHIP + "{idUser}";
 
+    protected static String DELETE_FRIEND = ApiHelper.FRIENDSHIP + "?idUser1={idUser1}&idUser2={idUser2}";
+
     public static String login(String username,String password) {
         HashMap<String,String> params = new HashMap<>();
         params.put("username",username);
@@ -127,7 +129,15 @@ public class ApiHelper {
         HashMap<String,String> params = new HashMap<>();
         params.put("idUser",String.valueOf(idUser));
 
-        return ApiHelper.getUrl(ApiHelper.IS_MY_FRIEND, params);
+        return ApiHelper.getUrl(ApiHelper.POST_FRIEND, params);
+    }
+
+    public static String deleteFriend(int idUser1, int idUser2) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idUser1",String.valueOf(idUser1));
+        params.put("idUser2",String.valueOf(idUser2));
+
+        return ApiHelper.getUrl(ApiHelper.DELETE_FRIEND, params);
     }
 
     protected static String getUrl(String url,HashMap<String,String> params) {

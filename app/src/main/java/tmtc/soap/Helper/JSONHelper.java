@@ -78,7 +78,6 @@ public class JSONHelper {
 
     public static User JSONToUser(JSONObject json) throws JSONException {
         User user = null;
-
         if(json != null && json.has("username") && json.has("password")) {
             user = new User(json.getString("username"),json.getString("password"));
             if(json.has("id")) {

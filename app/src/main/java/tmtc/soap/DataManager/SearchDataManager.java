@@ -60,6 +60,8 @@ public class SearchDataManager extends DataManager{
                     } catch (JSONException e) {
                         listener.OnSearchError(ErrorHelper.ErrorParsingJson());
                     }
+                } else {
+                    listener.OnSearchError(ErrorHelper.WrongStatusCode());
                 }
             }
 

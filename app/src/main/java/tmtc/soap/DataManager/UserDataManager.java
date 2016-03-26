@@ -41,6 +41,8 @@ public class UserDataManager extends DataManager{
                     } catch (JSONException e) {
                         listener.OnUserError(ErrorHelper.ErrorParsingJson());
                     }
+                } else {
+                    listener.OnUserError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -56,13 +58,14 @@ public class UserDataManager extends DataManager{
         });
     }
 
-    //TODO : à faire
     public void addFriend(User user ,final UserListener<Boolean> listener) {
         getClient().post(ApiHelper.postFriend(user.getId()),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 if(statusCode == 200) {
                     listener.OnUserSuccess(true);
+                } else {
+                    listener.OnUserError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -80,12 +83,25 @@ public class UserDataManager extends DataManager{
 
     //TODO : à faire
     public void deleteFriend(User user, final UserListener<Boolean> listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().delete(ApiHelper.deleteFriend(AuthDataManager.getInstance().getCurrentUser().getId(),user.getId()), new JsonHttpResponseHandler(){
             @Override
-            public void run() {
-                listener.OnUserSuccess(true);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    listener.OnUserSuccess(true);
+                } else {
+                    listener.OnUserError(ErrorHelper.WrongStatusCode());
+                }
             }
-        }, 300);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnUserError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnUserError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 }

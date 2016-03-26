@@ -99,6 +99,8 @@ public class AuthDataManager extends DataManager {
                     } catch (JSONException e) {
                         listener.onLoginError(ErrorHelper.ErrorParsingJson());
                     }
+                } else {
+                    listener.onLoginError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -142,6 +144,8 @@ public class AuthDataManager extends DataManager {
                     } catch (JSONException e) {
                         listener.onSignupError(ErrorHelper.ErrorParsingJson());
                     }
+                } else {
+                    listener.onSignupError(ErrorHelper.WrongStatusCode());
                 }
             }
 

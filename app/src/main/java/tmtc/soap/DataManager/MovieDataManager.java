@@ -65,6 +65,8 @@ public class MovieDataManager extends DataManager{
                         }
                     }
                     listener.OnMovieSuccess(movies);
+                } else {
+                    listener.OnMovieError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -98,6 +100,8 @@ public class MovieDataManager extends DataManager{
                     } catch (JSONException e) {
                         listener.OnMovieError(ErrorHelper.ErrorParsingJson());
                     }
+                } else {
+                    listener.OnMovieError(ErrorHelper.WrongStatusCode());
                 }
             }
 
@@ -141,19 +145,28 @@ public class MovieDataManager extends DataManager{
         });
     }
 
-    //TODO : à faire
     public void getPersonById(int id, final PersonListener listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().get(ApiHelper.getPerson(id),new JsonHttpResponseHandler(){
             @Override
-            public void run() {
-                MoviePerson person = new MoviePerson();
-                person.setId(69);
-                person.setName("Jackie Michel");
-                person.setPicture("http://static1.purepeople.com/articles/9/13/20/59/@/1306777-leonardo-dicaprio-premiere-du-film-950x0-1.jpg");
-                listener.onPersonSuccess(person);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    MoviePerson person = JSONHelper.JSONToPerson(response);
+                    listener.onPersonSuccess(person);
+                } catch (JSONException e) {
+                    listener.onPersonError(ErrorHelper.ErrorParsingJson());
+                }
             }
-        }, 1000);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.onPersonError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onPersonError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 
     public void boughtMovie(Movie movie, User user,final MovieListener<Boolean> listener) {
