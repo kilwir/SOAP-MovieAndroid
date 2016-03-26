@@ -13,7 +13,7 @@ import tmtc.soap.Model.Movie;
  * Created by remyjallan on 24/03/2016.
  */
 public class ApiHelper {
-    public static String BASE = "http://192.168.1.12:3000/";
+    public static String BASE = "http://192.168.1.96:3000/";
 
     public static String AUTH = ApiHelper.BASE + "auth/";
 
@@ -47,7 +47,9 @@ public class ApiHelper {
 
     protected static String COMMENT_USER = ApiHelper.COMMENT + "user/{idUser}";
 
-    protected static String IS_MY_FRIEND = ApiHelper.FRIENDSHIP + "{idUser2}";
+    protected static String IS_MY_FRIEND = ApiHelper.FRIENDSHIP + "{idUser}";
+
+    protected static String POST_FRIEND = ApiHelper.FRIENDSHIP + "{idUser}";
 
     public static String login(String username,String password) {
         HashMap<String,String> params = new HashMap<>();
@@ -115,6 +117,13 @@ public class ApiHelper {
     }
 
     public static String isMyFriend(int idUser) {
+        HashMap<String,String> params = new HashMap<>();
+        params.put("idUser",String.valueOf(idUser));
+
+        return ApiHelper.getUrl(ApiHelper.IS_MY_FRIEND, params);
+    }
+
+    public static String postFriend(int idUser) {
         HashMap<String,String> params = new HashMap<>();
         params.put("idUser",String.valueOf(idUser));
 

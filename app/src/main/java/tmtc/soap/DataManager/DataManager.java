@@ -15,6 +15,7 @@ public abstract class DataManager {
 
     public AsyncHttpClient getClient() {
         mClient.addHeader("tmtc-token",AuthDataManager.getInstance().getToken());
+        mClient.setConnectTimeout(100000);
         return mClient;
     }
 

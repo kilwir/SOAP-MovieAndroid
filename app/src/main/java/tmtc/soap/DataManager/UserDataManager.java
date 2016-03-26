@@ -28,12 +28,12 @@ public class UserDataManager extends DataManager{
     private UserDataManager() {}
 
     public void isMyFriend(User user, final UserListener<Boolean> listener) {
-        getClient().get(ApiHelper.isMyFriend(user.getId()),new JsonHttpResponseHandler() {
+        getClient().get(ApiHelper.isMyFriend(user.getId()), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                if(statusCode == 200) {
+                if (statusCode == 200) {
                     try {
-                        if(response.has("IsMyFriend") && response.getBoolean("IsMyFriend")) {
+                        if (response.has("IsMyFriend") && response.getBoolean("IsMyFriend")) {
                             listener.OnUserSuccess(true);
                         } else {
                             listener.OnUserSuccess(false);
@@ -58,13 +58,24 @@ public class UserDataManager extends DataManager{
 
     //TODO : à faire
     public void addFriend(User user ,final UserListener<Boolean> listener) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        getClient().post(ApiHelper.postFriend(user.getId()),new JsonHttpResponseHandler(){
             @Override
-            public void run() {
-                listener.OnUserSuccess(true);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if(statusCode == 200) {
+                    listener.OnUserSuccess(true);
+                }
             }
-        }, 300);
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnUserError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnUserError(ErrorHelper.ErrorParsingJson());
+            }
+        });
     }
 
     //TODO : à faire

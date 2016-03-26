@@ -84,8 +84,10 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
             UserDataManager.getInstance().addFriend(mUser, new UserListener<Boolean>() {
                 @Override
                 public void OnUserSuccess(Boolean response) {
-                    mIsFriend = true;
-                    mView.fabAlreadyFriend();
+                    if(response) {
+                        mIsFriend = true;
+                        mView.fabAlreadyFriend();
+                    }
                 }
 
                 @Override
