@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -143,7 +144,8 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
 
     @Override
     public void navigateToPlayer(Movie movie) {
-        Logger.d("Navigate to Player");
+        Intent intent = new Intent(this, PlayerActivity.class);
+        transitionTo(intent);
     }
 
     @OnClick(R.id.fab_share)
