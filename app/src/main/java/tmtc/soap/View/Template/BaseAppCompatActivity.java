@@ -24,6 +24,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setupWindowAnimations();
     }
 
     @Override
@@ -61,5 +62,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity implements
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
         startActivity(i, transitionActivityOptions.toBundle());
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void transitionTo(Intent i,int activityForResult) {
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+        startActivityForResult(i, activityForResult, transitionActivityOptions.toBundle());
     }
 }

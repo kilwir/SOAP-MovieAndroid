@@ -148,12 +148,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     @Override
-    public void setupWindowAnimations() {
-        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
-        getWindow().setExitTransition(slide);
-    }
-
-    @Override
     public boolean onQueryTextSubmit(String query) {
         this.navigateToSearch(query);
         return false;

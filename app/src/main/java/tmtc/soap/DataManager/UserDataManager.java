@@ -81,7 +81,6 @@ public class UserDataManager extends DataManager{
         });
     }
 
-    //TODO : à faire
     public void deleteFriend(User user, final UserListener<Boolean> listener) {
         getClient().delete(ApiHelper.deleteFriend(AuthDataManager.getInstance().getCurrentUser().getId(),user.getId()), new JsonHttpResponseHandler(){
             @Override

@@ -34,10 +34,15 @@ public class MoviePresenterImpl implements MoviePresenter {
     @Override
     public void boughtMovie(boolean bought) {
         if(!bought) { //Location
-            mView.navigateToBought(mMovie);
+            mView.confirmBought(mMovie.getName());
         } else { //Visionage
             mView.navigateToPlayer(mMovie);
         }
+    }
+
+    @Override
+    public void confirmBought() {
+        mView.navigateToBought(mMovie);
     }
 
     @Override

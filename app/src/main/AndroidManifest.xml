@@ -44,6 +44,8 @@
         </activity>
         <activity android:name=".View.Implementation.SearchActivity">
         </activity>
+        <activity android:name=".View.Implementation.BoughtActivity">
+        </activity>
     </application>
 
 </manifest>

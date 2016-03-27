@@ -1,13 +1,20 @@
 package tmtc.soap.View.Implementation;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -19,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tmtc.soap.Adapter.MovieContentPagerAdapter;
 import tmtc.soap.CustomView.TopCropImageView;
+import tmtc.soap.Fragment.FragmentMovieInformation;
 import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Listener.OnClickBoughtListener;
@@ -38,6 +46,8 @@ import tmtc.soap.View.Template.DrawerAppCompatActivity;
  */
 
 public class MovieActivity extends DrawerAppCompatActivity implements MovieView, ItemPersonListener.IPerson, ItemCommentListener.IComment, OnClickBoughtListener {
+
+    private static final int ID_BOUGHT = 69;
 
     private MoviePresenter mPresenter;
     private FragmentPagerAdapter mPagerAdapter;
@@ -78,6 +88,21 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     }
 
     @Override
+    public void confirmBought(String title) {
+        new MaterialDialog.Builder(this)
+                .title("Confirmer la location")
+                .content("Voulez-vous louer "+ title +" pour 1000€ ?")
+                .positiveText("Louer")
+                .negativeText("Annuler")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        mPresenter.confirmBought();
+                    }
+                }).show();
+    }
+
+    @Override
     public void navigateToMain() {
         super.onBackPressed();
     }
@@ -105,13 +130,15 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     @Override
     public void navigateToUser(User user) {
         Intent intent = new Intent(this,UserActivity.class);
-        intent.putExtra("user",Parcels.wrap(user));
+        intent.putExtra("user", Parcels.wrap(user));
         transitionTo(intent);
     }
 
     @Override
     public void navigateToBought(Movie movie) {
-        Logger.d("Navigate to bought");
+        Intent intent = new Intent(this, BoughtActivity.class);
+        intent.putExtra("movie", Parcels.wrap(movie));
+        transitionTo(intent, ID_BOUGHT);
     }
 
     @Override
@@ -121,7 +148,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
 
     @OnClick(R.id.fab_share)
     public void shareMovie() {
-        this.shareText("Super film tmtc://movie?id="+mPresenter.getMovie().getId());
+        this.shareText("Super film tmtc://movie?id=" + mPresenter.getMovie().getId());
     }
 
     @Override
@@ -134,5 +161,26 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     @Override
     public void OnClick(View view, boolean bought) {
         mPresenter.boughtMovie(bought);
+    }
+
+    @Override
+    public void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == ID_BOUGHT) {
+            if(resultCode == Activity.RESULT_OK) {
+                String message = data.getStringExtra("message");
+                showMessage(message);
+                if(data.getBooleanExtra("bought",false)) {
+                    MovieContentPagerAdapter adapter = (MovieContentPagerAdapter) ViewPagerContent.getAdapter();
+                    FragmentMovieInformation fragment = (FragmentMovieInformation) adapter.getFragment(0);
+                    fragment.loadContent();
+                }
+            }
+        }
     }
 }

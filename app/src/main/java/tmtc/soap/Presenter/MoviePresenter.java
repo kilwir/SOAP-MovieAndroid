@@ -12,4 +12,5 @@ public interface MoviePresenter {
     void init(Intent intent);
     Movie getMovie();
     void boughtMovie(boolean bought);
+    void confirmBought();
 }

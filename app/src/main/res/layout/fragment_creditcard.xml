@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.vinaygaba.creditcardview.CreditCardView
+        android:id="@+id/credit_card_rj"
+        android:layout_width="fill_parent"
+        android:layout_height="225dp"
+        android:background="@drawable/cardbackground_world"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardNumber="5500005555555569"
+        app:cardName="Jallan Rémy"
+        app:cardNumberTextColor="#cccccc"
+        app:cardNumberFormat="all_digits"
+        app:cardNameTextColor="#cccccc"
+        app:type="mastercard"
+        app:brandLogo="@drawable/ic_mopibox"
+        app:putChip="true"
+        app:expiryDate = "02/22"
+        app:expiryDateTextColor="#cccccc"
+        app:isEditable="false"
+        app:validTillTextColor="#cccccc"
+        app:hintTextColor = "#cccccc"/>
+
+    <com.vinaygaba.creditcardview.CreditCardView
+        android:id="@+id/credit_card_am"
+        android:layout_width="fill_parent"
+        android:layout_height="225dp"
+        android:background="@drawable/cardbackground_sky"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardNumber="5500005555555559"
+        app:cardName="Marty Alexandre"
+        app:cardNumberTextColor="#cccccc"
+        app:cardNumberFormat="all_digits"
+        app:cardNameTextColor="#cccccc"
+        app:type="american_express"
+        app:brandLogo="@drawable/ic_mopibox"
+        app:putChip="true"
+        app:expiryDate = "02/22"
+        app:expiryDateTextColor="#cccccc"
+        app:isEditable="false"
+        app:validTillTextColor="#cccccc"
+        app:hintTextColor = "#cccccc"
+        />
+
+</LinearLayout>

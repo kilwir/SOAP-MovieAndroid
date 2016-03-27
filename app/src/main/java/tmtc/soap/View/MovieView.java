@@ -12,6 +12,7 @@ import tmtc.soap.Model.User;
  */
 public interface MovieView extends BaseView {
     void init(Movie movie);
+    void confirmBought(String title);
     void navigateToMain();
     void navigateToPerson(View view,MoviePerson person);
     void navigateToLogin();

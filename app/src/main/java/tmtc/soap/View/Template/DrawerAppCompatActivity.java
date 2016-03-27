@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 
 import butterknife.Bind;
