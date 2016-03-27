@@ -33,7 +33,7 @@ public class LoginActivity extends BaseAppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mPresenter = new LoginPresenterImpl(this);
+        mPresenter = new LoginPresenterImpl(this,this);
         setupWindowAnimations();
         mPresenter.checkIsConnected();
     }

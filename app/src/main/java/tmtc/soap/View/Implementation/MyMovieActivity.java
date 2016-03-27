@@ -40,8 +40,8 @@ public class MyMovieActivity extends ToolbarDrawerActivity implements MyMovieVie
     @Override
     protected void init() {
         super.init();
-        mToolbar.setTitle("Mes films");
-        mPresenter = new MyMoviePresenterImpl(this);
+        mToolbar.setTitle(getString(R.string.activity_title_my_movie));
+        mPresenter = new MyMoviePresenterImpl(this,this);
         mPresenter.loadMyMovie();
     }
 

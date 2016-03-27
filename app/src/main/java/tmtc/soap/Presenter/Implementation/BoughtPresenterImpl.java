@@ -1,5 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.orhanobut.logger.Logger;
@@ -13,6 +14,7 @@ import tmtc.soap.Listener.MovieListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Presenter.BoughtPresenter;
+import tmtc.soap.R;
 import tmtc.soap.View.BoughtView;
 
 /**
@@ -22,11 +24,13 @@ import tmtc.soap.View.BoughtView;
 public class BoughtPresenterImpl implements BoughtPresenter, MovieListener<Boolean> {
 
     private BoughtView mView;
+    private Context mContext;
     private CreditCardView mCard;
     private Movie mMovie;
 
-    public BoughtPresenterImpl(BoughtView view) {
+    public BoughtPresenterImpl(BoughtView view, Context context) {
         mView = view;
+        mContext = context;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class BoughtPresenterImpl implements BoughtPresenter, MovieListener<Boole
 
     @Override
     public void buy() {
-        mView.showProgress("Traitement...");
+        mView.showProgress(mContext.getString(R.string.treatment___));
         MovieDataManager.getInstance().buyMovie(mMovie, AuthDataManager.getInstance().getCurrentUser(),this);
     }
 
@@ -55,9 +59,9 @@ public class BoughtPresenterImpl implements BoughtPresenter, MovieListener<Boole
     public void OnMovieSuccess(Boolean movie) {
         mView.hideProgress();
         if(movie) {
-            mView.backToMovie("La location à été effectué",true);
+            mView.backToMovie(mContext.getString(R.string.locate_has_effect),true);
         } else {
-            mView.backToMovie("Vous ne pouvez pas louer ce film",false);
+            mView.backToMovie(mContext.getString(R.string.locate_has_no_effect),false);
         }
     }
 

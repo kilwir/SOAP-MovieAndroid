@@ -40,8 +40,8 @@ public class RecommendationActivity extends ToolbarDrawerActivity implements Rec
     @Override
     protected void init() {
         super.init();
-        mToolbar.setTitle("Recommandations");
-        mPresenter = new RecommendationPresenterImpl(this);
+        mToolbar.setTitle(getString(R.string.activity_title_recommendations));
+        mPresenter = new RecommendationPresenterImpl(this,this);
         mPresenter.loadRecommendation();
     }
 

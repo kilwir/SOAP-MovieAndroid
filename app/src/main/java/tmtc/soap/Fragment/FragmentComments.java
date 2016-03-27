@@ -145,10 +145,10 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
     @Override
     public void onClick(View view) {
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .title("Ajouter un commentaire")
+                .title(getActivity().getApplicationContext().getString(R.string.add_comment))
                 .customView(R.layout.dialog_comment, false)
-                .positiveText("Poster")
-                .negativeText("Annuler")
+                .positiveText(getActivity().getApplicationContext().getString(R.string.send_comment))
+                .negativeText(getActivity().getApplicationContext().getString(R.string.cancel))
                 .onPositive(this)
                 .build();
 
@@ -158,7 +158,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
             inputComment.setText(mPersonalComment.getContent());
             rating.setRating((float) mPersonalComment.getRating());
 
-            dialog.setTitle("Modifier mon commenaire");
+            dialog.setTitle(getActivity().getApplicationContext().getString(R.string.edit_comment));
         }
 
         dialog.show();

@@ -57,7 +57,7 @@ public class MainActivity extends ToolbarDrawerActivity implements MainView, Nav
 
         this.init();
 
-        mPresenter = new MainPresenterImpl(this);
+        mPresenter = new MainPresenterImpl(this,this);
 
         mPresenter.loadLastMovies();
     }
@@ -65,7 +65,7 @@ public class MainActivity extends ToolbarDrawerActivity implements MainView, Nav
     @Override
     protected void init() {
         super.init();
-        mToolbar.setTitle("Dernière Sortie");
+        mToolbar.setTitle(getString(R.string.activity_title_last_exit));
         SearchView.setOnQueryTextListener(this);
     }
 

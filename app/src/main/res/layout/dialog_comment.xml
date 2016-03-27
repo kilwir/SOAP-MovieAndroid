@@ -13,7 +13,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:inputType="textAutoComplete"
-                  android:hint="Commentaire"
+                  android:hint="@string/comment"
                   android:lines="2"/>
     </android.support.design.widget.TextInputLayout>
 

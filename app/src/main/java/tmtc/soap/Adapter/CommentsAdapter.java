@@ -82,7 +82,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 headerHolder.mAddComment.setOnClickListener(mClickListener);
 
             if(mPersonalCommentExist) {
-                headerHolder.mAddComment.setText("Modifier mon commentaire");
+                headerHolder.mAddComment.setText(mContext.getResources().getString(R.string.edit_comment));
             }
         }
     }

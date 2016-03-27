@@ -63,7 +63,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     public TitlePageIndicator PageIndicatorContent;
 
     private void initViewPager(Movie movie) {
-        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this,this,this);
+        mPagerAdapter = new MovieContentPagerAdapter(getFragmentManager(),movie,this,this,this,this);
         ViewPagerContent.setAdapter(mPagerAdapter);
         PageIndicatorContent.setViewPager(ViewPagerContent);
     }
@@ -74,7 +74,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
         setContentView(R.layout.activity_movie);
         this.init();
         Logger.init("MovieActivity");
-        mPresenter = new MoviePresenterImpl(this);
+        mPresenter = new MoviePresenterImpl(this,this);
         mPresenter.init(getIntent());
 
     }
@@ -91,10 +91,10 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
     @Override
     public void confirmBought(String title) {
         new MaterialDialog.Builder(this)
-                .title("Confirmer la location")
-                .content("Voulez-vous louer "+ title +" pour 1000€ ?")
-                .positiveText("Louer")
-                .negativeText("Annuler")
+                .title(getString(R.string.confirm_locate))
+                .content(getString(R.string.do_you_want_locate)+ " " + title + " " +getString(R.string.for_money))
+                .positiveText(getString(R.string.locate))
+                .negativeText(getString(R.string.cancel))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
@@ -150,7 +150,7 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
 
     @OnClick(R.id.fab_share)
     public void shareMovie() {
-        this.shareText("Super film tmtc://movie?id=" + mPresenter.getMovie().getId());
+        this.shareText(getString(R.string.great_movie) + " tmtc://movie?id=" + mPresenter.getMovie().getId());
     }
 
     @Override

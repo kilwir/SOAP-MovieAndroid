@@ -1,6 +1,9 @@
 package tmtc.soap.Helper;
 
+import android.content.Context;
+
 import tmtc.soap.Model.ErrorContainer;
+import tmtc.soap.R;
 
 /**
  * Bad Boys Team

@@ -3,6 +3,7 @@ package tmtc.soap.Adapter;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
@@ -15,6 +16,7 @@ import tmtc.soap.Listener.ItemCommentListener;
 import tmtc.soap.Listener.ItemPersonListener;
 import tmtc.soap.Listener.OnClickBoughtListener;
 import tmtc.soap.Model.Movie;
+import tmtc.soap.R;
 
 /**
  * Bad Boys Team
@@ -27,14 +29,16 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
     private ItemPersonListener.IPerson mListenerPerson;
     private ItemCommentListener.IComment mListenerComment;
     private OnClickBoughtListener mListenerRent;
+    private Context mContext;
 
     public MovieContentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public MovieContentPagerAdapter(FragmentManager fm, Movie movie,ItemPersonListener.IPerson listenerPerson,ItemCommentListener.IComment listenerComment,OnClickBoughtListener listenerRent) {
+    public MovieContentPagerAdapter(FragmentManager fm, Movie movie, Context context,ItemPersonListener.IPerson listenerPerson,ItemCommentListener.IComment listenerComment,OnClickBoughtListener listenerRent) {
         super(fm);
         this.mMovie = movie;
+        this.mContext = context;
         this.mListenerPerson = listenerPerson;
         this.mListenerComment = listenerComment;
         this.mListenerRent = listenerRent;
@@ -72,11 +76,11 @@ public class MovieContentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Information";
+                return mContext.getResources().getString(R.string.movie_pager_title_information);
             case 1:
-                return "Casting";
+                return mContext.getResources().getString(R.string.movie_pager_title_casting);
             case 2:
-                return "Comments";
+                return mContext.getResources().getString(R.string.movie_pager_title_comment);
             default:
                 return "";
         }

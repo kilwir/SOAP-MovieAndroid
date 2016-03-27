@@ -1,5 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -15,6 +16,7 @@ import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.Movie;
 import tmtc.soap.Model.MoviePerson;
 import tmtc.soap.Presenter.PersonPresenter;
+import tmtc.soap.R;
 import tmtc.soap.View.PersonView;
 
 /**
@@ -24,11 +26,12 @@ import tmtc.soap.View.PersonView;
 public class PersonPresenterImpl implements PersonPresenter, MovieListener<List<Movie>>, PersonListener {
 
     private MoviePerson mPerson;
-
+    private Context mContext;
     private PersonView mView;
 
-    public PersonPresenterImpl(PersonView view) {
+    public PersonPresenterImpl(PersonView view, Context context) {
         this.mView = view;
+        mContext = context;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class PersonPresenterImpl implements PersonPresenter, MovieListener<List<
                     mView.navigateToLogin();
                     return;
                 }
-                mView.showProgress("Loading...");
+                mView.showProgress(mContext.getString(R.string.loading___));
                 Uri data = intent.getData();
                 String id = data.getQueryParameter("id");
                 if(id != null) {
@@ -58,7 +61,7 @@ public class PersonPresenterImpl implements PersonPresenter, MovieListener<List<
     @Override
     public void loadMovies() {
         if(mPerson != null) {
-            mView.showProgress("Loading...");
+            mView.showProgress(mContext.getString(R.string.loading___));
             MovieDataManager.getInstance().getMovieForPerson(mPerson,this);
         }
     }

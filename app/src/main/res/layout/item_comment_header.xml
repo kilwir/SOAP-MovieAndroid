@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorAccent"
-                android:text="Ajouter un commentaire"
+                android:text="@string/add_comment"
                 android:textColor="?attr/colorPrimary">
 
 </Button>

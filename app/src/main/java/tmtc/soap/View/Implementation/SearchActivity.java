@@ -56,7 +56,7 @@ public class SearchActivity extends DrawerAppCompatActivity implements SearchVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         this.init();
-        mPresenter = new SearchPresenterImpl(this);
+        mPresenter = new SearchPresenterImpl(this,this);
         mPresenter.init(getIntent());
     }
 

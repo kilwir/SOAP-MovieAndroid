@@ -1,5 +1,6 @@
 package tmtc.soap.Presenter.Implementation;
 
+import android.content.Context;
 import android.content.Intent;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import tmtc.soap.Listener.SearchListener;
 import tmtc.soap.Model.ErrorContainer;
 import tmtc.soap.Model.SearchItem;
 import tmtc.soap.Presenter.SearchPresenter;
+import tmtc.soap.R;
 import tmtc.soap.View.SearchView;
 
 /**
@@ -19,9 +21,11 @@ public class SearchPresenterImpl implements SearchPresenter, SearchListener<List
 
     private SearchView mView;
     private String mCurrentQuery;
+    private Context mContext;
 
-    public SearchPresenterImpl(SearchView view) {
+    public SearchPresenterImpl(SearchView view, Context context) {
         mView = view;
+        mContext = context;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class SearchPresenterImpl implements SearchPresenter, SearchListener<List
 
     @Override
     public void search(String query) {
-        mView.showProgress("Loading ...");
+        mView.showProgress(mContext.getString(R.string.loading___));
         this.mCurrentQuery = query;
         SearchDataManager.getInstance().search(query,this);
     }

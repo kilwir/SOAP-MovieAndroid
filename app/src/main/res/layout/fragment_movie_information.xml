@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SoapHeaderTextView"
-            android:text="Synopsis"/>
+            android:text="@string/synopsis"/>
         <TextView
             android:id="@+id/text_synopsis"
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorAccent"
                 android:visibility="invisible"
-                android:text="Louer ce film"
+                android:text="@string/bought_movie"
                 android:textColor="?attr/colorPrimary"/>
     </LinearLayout>
 

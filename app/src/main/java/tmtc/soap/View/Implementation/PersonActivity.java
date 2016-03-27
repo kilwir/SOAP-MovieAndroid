@@ -53,7 +53,7 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
         init();
-        mPresenter = new PersonPresenterImpl(this);
+        mPresenter = new PersonPresenterImpl(this,this);
         mPresenter.init(getIntent());
     }
 
@@ -104,7 +104,7 @@ public class PersonActivity extends DrawerAppCompatActivity implements PersonVie
 
     @OnClick(R.id.fab_share)
     public void sharePerson() {
-        this.shareText("Super film sur tmtc://person?id="+mPresenter.getPerson().getId());
+        this.shareText(getString(R.string.great_person) + " sur tmtc://person?id="+mPresenter.getPerson().getId());
     }
 
     @Override

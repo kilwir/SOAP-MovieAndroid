@@ -51,7 +51,7 @@ public class FragmentMovieInformation extends Fragment {
                     mBought = movie;
                     ButtonRent.setVisibility(View.VISIBLE);
                     if (movie) {
-                        ButtonRent.setText("Regarder le film");
+                        ButtonRent.setText(getActivity().getApplicationContext().getString(R.string.watch_video));
                     }
                 }
 

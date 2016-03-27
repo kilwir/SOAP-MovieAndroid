@@ -38,7 +38,7 @@ public class SignupActivity extends BaseAppCompatActivity implements SignupView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        mPresenter = new SignupPresenterImpl(this);
+        mPresenter = new SignupPresenterImpl(this,this);
         this.setupWindowAnimations();
     }
 

@@ -28,7 +28,7 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     private UserView mView;
     private User mUser;
-    private Boolean mIsFriend;
+    private boolean mIsFriend;
 
     public UserPresenterImpl(UserView view) {
         mView = view;
@@ -122,6 +122,6 @@ public class UserPresenterImpl implements UserPresenter, CommentsListener<List<C
 
     @Override
     public void OnUserError(ErrorContainer error) {
-        mView.showMessage("Error load friend state");
+        mView.showMessage(error.Message);
     }
 }

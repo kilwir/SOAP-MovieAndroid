@@ -45,7 +45,7 @@ public class BoughtActivity extends DrawerAppCompatActivity implements BoughtVie
     @Override
     protected void init() {
         super.init();
-        mPresenter = new BoughtPresenterImpl(this);
+        mPresenter = new BoughtPresenterImpl(this,this);
         mPresenter.init(getIntent());
         this.setCreditCardFragment();
     }
