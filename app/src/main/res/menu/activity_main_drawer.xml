@@ -3,12 +3,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/last_exit"
-            android:icon="@drawable/ic_camera_roll_24dp"
-            android:title="Last exit"
+            android:icon="@drawable/ic_movie_creation_24dp"
+            android:title="Dernière Sortie"
         />
+        <item
+            android:id="@+id/my_movie"
+            android:icon="@drawable/ic_camera_roll_24dp"
+            android:title="Mes films"
+            />
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_exit_to_app"
-            android:title="Logout"/>
+            android:title="Deconnexion"/>
     </group>
 </menu>

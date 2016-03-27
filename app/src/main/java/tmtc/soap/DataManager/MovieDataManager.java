@@ -205,8 +205,40 @@ public class MovieDataManager extends DataManager{
         getClient().post(ApiHelper.BUY, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                if(statusCode == 200) {
+                if (statusCode == 200) {
                     listener.OnMovieSuccess(true);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+            }
+        });
+    }
+
+    public void myMovie(User user, final MovieListener<List<Movie>> listener) {
+        getClient().get(ApiHelper.myMovie(user.getId()), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                if (statusCode == 200) {
+                    List<Movie> movies = new ArrayList<Movie>();
+                    if(response.has("movies")) {
+                        try {
+                            JSONArray moviesJson = response.getJSONArray("movies");
+                            for(int i = 0; i< moviesJson.length(); i++) {
+                                movies.add(JSONHelper.JSONToMovie((JSONObject) moviesJson.get(i)));
+                            }
+                        } catch (JSONException e) {
+                            listener.OnMovieError(ErrorHelper.ErrorParsingJson());
+                        }
+                    }
+                    listener.OnMovieSuccess(movies);
                 }
             }
 

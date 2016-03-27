@@ -185,4 +185,10 @@ public class MovieActivity extends DrawerAppCompatActivity implements MovieView,
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

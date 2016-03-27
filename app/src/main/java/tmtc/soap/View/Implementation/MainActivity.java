@@ -79,6 +79,7 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     }
 
     protected void initializeToolbar() {
+        mToolbar.setTitle("Dernière sortie");
         setSupportActionBar(mToolbar);
     }
 

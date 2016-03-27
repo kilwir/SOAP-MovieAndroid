@@ -14,6 +14,7 @@ import tmtc.soap.DataManager.AuthDataManager;
 import tmtc.soap.R;
 import tmtc.soap.View.Implementation.LoginActivity;
 import tmtc.soap.View.Implementation.MainActivity;
+import tmtc.soap.View.Implementation.MyMovieActivity;
 
 /**
  * Bad Boys Team
@@ -73,6 +74,13 @@ public abstract class DrawerAppCompatActivity extends BaseAppCompatActivity impl
                 intentMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intentMain);
+                finish();
+                break;
+            case R.id.my_movie:
+                Intent intentMyMovie = new Intent(this, MyMovieActivity.class);
+                intentMyMovie.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentMyMovie.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentMyMovie);
                 finish();
                 break;
         }
