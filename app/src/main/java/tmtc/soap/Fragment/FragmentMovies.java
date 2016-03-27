@@ -2,6 +2,7 @@ package tmtc.soap.Fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,8 @@ public class FragmentMovies extends Fragment implements ItemMovieListener.IPosit
 
     @Bind(R.id.recycler_movies)
     public RecyclerView RecyclerMovies;
+    @Bind(R.id.swipeContainer)
+    public SwipeRefreshLayout SwipeRefresh;
 
     private List<Movie> mMovies;
 
@@ -55,6 +58,10 @@ public class FragmentMovies extends Fragment implements ItemMovieListener.IPosit
         mListenerMovie = listenerMovie;
     }
 
+    public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+        SwipeRefresh.setOnRefreshListener(listener);
+    }
+
     @Override public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -65,6 +72,10 @@ public class FragmentMovies extends Fragment implements ItemMovieListener.IPosit
         MoviesAdapter adapter = new MoviesAdapter(getActivity(),movies);
         adapter.setItemMovieListener(this);
         RecyclerMovies.setAdapter(adapter);
+    }
+
+    public void isRefresh() {
+        SwipeRefresh.setRefreshing(false);
     }
 
     @Override

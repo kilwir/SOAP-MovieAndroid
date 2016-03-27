@@ -12,6 +12,11 @@
             android:title="Mes films"
             />
         <item
+            android:id="@+id/recommendation"
+            android:icon="@drawable/ic_thumb_up_24dp"
+            android:title="Recommandations"
+            />
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_exit_to_app"
             android:title="Deconnexion"/>

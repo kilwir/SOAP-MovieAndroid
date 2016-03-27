@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -41,11 +42,10 @@ import tmtc.soap.Presenter.MainPresenter;
 import tmtc.soap.R;
 import tmtc.soap.View.Template.DrawerAppCompatActivity;
 import tmtc.soap.View.MainView;
+import tmtc.soap.View.Template.ToolbarDrawerActivity;
 
-public class MainActivity extends DrawerAppCompatActivity implements MainView, NavigationView.OnNavigationItemSelectedListener, ItemMovieListener.IMovie, MaterialSearchView.OnQueryTextListener {
+public class MainActivity extends ToolbarDrawerActivity implements MainView, NavigationView.OnNavigationItemSelectedListener, ItemMovieListener.IMovie, MaterialSearchView.OnQueryTextListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.toolbar)
-    public Toolbar mToolbar;
     @Bind(R.id.search_view)
     public MaterialSearchView SearchView;
     private MainPresenter mPresenter;
@@ -65,22 +65,8 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     @Override
     protected void init() {
         super.init();
-        initializeToolbar();
-        initializeDrawer();
+        mToolbar.setTitle("Dernière Sortie");
         SearchView.setOnQueryTextListener(this);
-    }
-
-    protected void initializeDrawer() {
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
-                R.string.open_nagivation_drawer, R.string.close_navigation_drawer);
-        mDrawer.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-    protected void initializeToolbar() {
-        mToolbar.setTitle("Dernière sortie");
-        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -88,7 +74,9 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
         FragmentMovies fragmentMovies = (FragmentMovies) getFragmentManager().findFragmentById(R.id.fragment_movies);
         if(fragmentMovies != null) {
             fragmentMovies.setListenerMovie(this);
+            fragmentMovies.setRefreshListener(this);
             fragmentMovies.loadMovies(movies);
+            fragmentMovies.isRefresh();
         }
     }
 
@@ -122,7 +110,6 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //Set icon color
         MenuItem item = menu.findItem(R.id.action_search);
         item.getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         SearchView.setMenuItem(item);
@@ -157,5 +144,10 @@ public class MainActivity extends DrawerAppCompatActivity implements MainView, N
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.loadLastMovies();
     }
 }

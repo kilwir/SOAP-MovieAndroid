@@ -33,6 +33,8 @@ public class ApiHelper {
 
     public static String BUY = ApiHelper.MOVIE + "buy";
 
+    public static String RECOMMENDED = ApiHelper.MOVIE + "recommended/";
+
     protected static String LOGIN = ApiHelper.AUTH + "{username}/{password}";
 
     protected static String BOUGHT = ApiHelper.MOVIE + "bought?idUser={idUser}&idMovie={idMovie}";

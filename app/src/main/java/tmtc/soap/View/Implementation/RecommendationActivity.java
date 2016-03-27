@@ -12,14 +12,13 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.Bind;
 import tmtc.soap.Fragment.FragmentMovies;
 import tmtc.soap.Listener.ItemMovieListener;
 import tmtc.soap.Model.Movie;
-import tmtc.soap.Presenter.Implementation.MyMoviePresenterImpl;
-import tmtc.soap.Presenter.MyMoviePresenter;
+import tmtc.soap.Presenter.Implementation.RecommendationPresenterImpl;
+import tmtc.soap.Presenter.RecommendationPresenter;
 import tmtc.soap.R;
-import tmtc.soap.View.MyMovieView;
+import tmtc.soap.View.RecommendationView;
 import tmtc.soap.View.Template.DrawerAppCompatActivity;
 import tmtc.soap.View.Template.ToolbarDrawerActivity;
 
@@ -27,26 +26,27 @@ import tmtc.soap.View.Template.ToolbarDrawerActivity;
  * Bad Boys Team
  * Created by remyjallan on 27/03/2016.
  */
-public class MyMovieActivity extends ToolbarDrawerActivity implements MyMovieView, ItemMovieListener.IMovie, SwipeRefreshLayout.OnRefreshListener {
-    private MyMoviePresenter mPresenter;
+public class RecommendationActivity extends ToolbarDrawerActivity implements RecommendationView, ItemMovieListener.IMovie, SwipeRefreshLayout.OnRefreshListener {
+
+    private RecommendationPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_movie);
+        setContentView(R.layout.activity_recommendation);
         this.init();
     }
 
     @Override
     protected void init() {
         super.init();
-        mToolbar.setTitle("Mes films");
-        mPresenter = new MyMoviePresenterImpl(this);
-        mPresenter.loadMyMovie();
+        mToolbar.setTitle("Recommandations");
+        mPresenter = new RecommendationPresenterImpl(this);
+        mPresenter.loadRecommendation();
     }
 
     @Override
-    public void showMyMovies(List<Movie> movies) {
+    public void showRecommendation(List<Movie> movies) {
         FragmentMovies fragmentMovies = (FragmentMovies) getFragmentManager().findFragmentById(R.id.fragment_movies);
         if(fragmentMovies != null) {
             fragmentMovies.setListenerMovie(this);
@@ -60,17 +60,17 @@ public class MyMovieActivity extends ToolbarDrawerActivity implements MyMovieVie
     public void navigateToMovie(View view, Movie movie) {
         Intent intent = new Intent(this,MovieActivity.class);
         intent.putExtra("movie", Parcels.wrap(movie));
-        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MyMovieActivity.this, view, "poster_movie");
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(RecommendationActivity.this, view, "poster_movie");
         startActivity(intent, activityOptions.toBundle());
     }
 
     @Override
     public void ItemMovieListenerOnClick(View view, Movie movie) {
-       this.navigateToMovie(view, movie);
+        this.navigateToMovie(view,movie);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadMyMovie();
+        mPresenter.loadRecommendation();
     }
 }

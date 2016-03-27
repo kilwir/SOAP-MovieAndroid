@@ -3,6 +3,7 @@ package tmtc.soap.Fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,12 +41,14 @@ import tmtc.soap.View.Template.BaseAppCompatActivity;
  * Bad Boys Team
  * Created by remyjallan on 17/03/2016.
  */
-public class FragmentComments extends Fragment implements CommentsListener<List<Comment>>,View.OnClickListener, MaterialDialog.SingleButtonCallback, ItemCommentListener.IPosition {
+public class FragmentComments extends Fragment implements CommentsListener<List<Comment>>,View.OnClickListener, MaterialDialog.SingleButtonCallback, ItemCommentListener.IPosition, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recycler_comments)
     public RecyclerView RecyclerComments;
     @Bind(R.id.loader_comments)
     public ProgressBar LoaderComments;
+    @Bind(R.id.swipeContainer)
+    public SwipeRefreshLayout SwipeContainer;
 
     private Movie mMovie;
     private List<Comment> mComments;
@@ -59,6 +62,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         ButterKnife.bind(this, view);
         Logger.init("Comments Fragment");
         this.initRecyclerView();
+        SwipeContainer.setOnRefreshListener(this);
         if(mMovie != null) {
             this.loadComments(false);
         }
@@ -99,6 +103,7 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         if(mComments == null || reload) {
             showProgress();
             CommentDataManager.getInstance().getMovieComment(mMovie, this);
+            SwipeContainer.setRefreshing(false);
         } else {
             loadContent();
         }
@@ -194,5 +199,10 @@ public class FragmentComments extends Fragment implements CommentsListener<List<
         if(mListener != null && mComments != null) {
             mListener.ItemCommentClickListener(view,mComments.get(position));
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        loadComments(true);
     }
 }
