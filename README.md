@@ -20,7 +20,7 @@ Pour pouvoir tester l'application il vous faut 3 choses :
 > - Ouvrer le projet Android SOAP TMTC
 > - Rendez-vous dans le fichier ApiHelper.java situé dans
 ```/SOAPTMTC/app/src/main/java/tmtc/soap/Helper/ApiHelper.java```
-> - Modifier "mon-ip" par l'adresse ip de votre poste ou est situé l'api Node lancé.
+> - Modifier "mon-ip" par l'adresse ip de votre poste ou est situé l'api Node lancé
 > - Modifier "mon-port" par le port de votre serveur (par défaut 3000)
 > - Compiler l'application et lancer la sur votre terminal
 
