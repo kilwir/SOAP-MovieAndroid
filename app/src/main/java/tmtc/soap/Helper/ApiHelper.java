@@ -13,7 +13,7 @@ import tmtc.soap.Model.Movie;
  * Created by remyjallan on 24/03/2016.
  */
 public class ApiHelper {
-    public static String BASE = "http://192.168.1.12:3000/";
+    public static String BASE = "http://mon-ip:mon-port/";
 
     public static String AUTH = ApiHelper.BASE + "auth/";
 
