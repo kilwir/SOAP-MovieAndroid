@@ -24,4 +24,4 @@ Pour pouvoir tester l'application il vous faut 3 choses :
 > - Modifier "mon-port" par le port de votre serveur (par défaut 3000)
 > - Compiler l'application et lancer la sur votre terminal
 
-Pour toute questions, n'hésiter pas à m'envoyer un mail a remy.jallan@ynov.com
+Pour toute questions, n'hésiter pas à me contacter
